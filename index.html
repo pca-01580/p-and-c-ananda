@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Physics & Chemistry with Ananda | রুটিন ও তথ্য</title>
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
+    <!-- FontAwesome Icons CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Font: Hind Siliguri & Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -68,13 +68,13 @@
 </head>
 <body class="text-slate-800 antialiased flex flex-col justify-between min-h-screen relative">
 
-    <!-- Navigation Header with Logo on LEFT and Text Header -->
+    <!-- Navigation Header with Logo on LEFT and Text Header (No visible Admin or QR buttons for students) -->
     <header class="w-full bg-slate-950/90 backdrop-blur-md border-b border-emerald-900/60 sticky top-0 z-40">
         <div class="max-w-4xl mx-auto px-4 py-2.5 flex justify-between items-center">
             
-            <!-- Left Side: Custom Logo Image/Vector + Brand Text Header (Secret 3-Click Admin Entry) -->
-            <div class="flex items-center space-x-3 cursor-pointer select-none" onclick="handleSecretAdminClick()" title="এডমিন প্যানেল (৩ বার ক্লিক করুন)">
-                <!-- Brand Vector Logo matching uploaded image style -->
+            <!-- Left Side: Custom Brand Logo + Title (Secret 3-Click Admin Entry) -->
+            <div class="flex items-center space-x-3 cursor-pointer select-none" onclick="handleSecretAdminClick()" title="ফিজিক্স & কেমিস্ট্রি with আনন্দ">
+                <!-- Brand Vector Logo matching flask/atom theme -->
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-950 via-slate-900 to-black p-1 border-2 border-emerald-500/40 shadow-lg flex items-center justify-center relative overflow-hidden shrink-0">
                     <svg viewBox="0 0 100 100" class="w-full h-full">
                         <!-- Atom Orbit top left -->
@@ -93,7 +93,7 @@
                     </svg>
                 </div>
 
-                <!-- Brand Name Header Text with Color Customization -->
+                <!-- Brand Header Text with Color Customization -->
                 <div>
                     <h1 class="text-base sm:text-lg font-black leading-tight tracking-wide flex items-center gap-1">
                         <span class="text-[#fffdd0]">ফিজিক্স</span>
@@ -202,15 +202,15 @@
             </form>
         </div>
 
-        <!-- Routine Display Section (Unlocked after successful submission) -->
+        <!-- Routine Display Section (Clean Student View - No Timer Visible) -->
         <div id="routineContainer" class="hidden glass-card rounded-3xl p-5 sm:p-6 shadow-2xl border border-white/20 text-center relative animate-fade-in mb-16">
             
             <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4 text-left">
                 <div>
                     <span class="text-xs font-bold text-emerald-700 bg-emerald-100 border border-emerald-300 px-2.5 py-1 rounded-full">
-                        <i class="fa-solid fa-circle-check mr-1"></i> তথ্য সংরক্ষিত হয়েছে!
+                        <i class="fa-solid fa-circle-check mr-1"></i> রুটিন দেখতে পেয়েছো!
                     </span>
-                    <h3 class="text-xl font-bold text-slate-900 mt-1">
+                    <h3 class="text-xl font-bold text-slate-900 mt-1.5">
                         স্বাগতম, <span id="displayStudentName" class="text-emerald-700"></span>!
                     </h3>
                     <p class="text-xs text-slate-500 font-medium mt-0.5">
@@ -220,12 +220,6 @@
                 <button onclick="resetFormView()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-3 py-1.5 rounded-xl transition">
                     <i class="fa-solid fa-rotate-left mr-1"></i> ব্যাক
                 </button>
-            </div>
-
-            <!-- Live View Duration Counter Indicator -->
-            <div class="mb-3 px-3 py-1.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between text-xs text-emerald-900 font-medium">
-                <span><i class="fa-regular fa-clock text-emerald-600 mr-1"></i> দেখা শুরু: <strong id="openTimeDisplay">--:--</strong></span>
-                <span>⏱️ দেখা কতক্ষণ: <strong id="liveDurationTimer" class="font-bold text-emerald-700">00 মিনিট 00 সেকেন্ড</strong></span>
             </div>
 
             <!-- Routine Image Display -->
@@ -242,7 +236,7 @@
                 </div>
             </div>
 
-            <!-- Download & Share Action Buttons (Tracked) -->
+            <!-- Download & Share Action Buttons (Tracked silently for Admin) -->
             <div class="mt-4 flex flex-col sm:flex-row gap-2.5">
                 <button onclick="handleImageDownload()" class="flex-1 py-3 px-4 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-2 shadow border border-slate-700">
                     <i class="fa-solid fa-download text-amber-400"></i>
@@ -288,7 +282,7 @@
         <p class="text-slate-300 text-xs mt-3">জুম করতে পিন্চ বা ডাবল ট্যাপ করুন</p>
     </div>
 
-    <!-- ADMIN PANEL MODAL (PIN: 1234) -->
+    <!-- SECRET ADMIN PANEL MODAL (PIN: 1234) -->
     <div id="adminModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-4">
         <div class="bg-white rounded-3xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden border border-slate-200">
             
@@ -298,7 +292,7 @@
                     <i class="fa-solid fa-user-shield text-amber-400 text-xl"></i>
                     <div>
                         <h3 class="font-bold text-base leading-tight">এডমিন প্যানেল (আনন্দ স্যার)</h3>
-                        <p class="text-xs text-emerald-400">শিক্ষার্থীদের তথ্য, রুটিন ভিউ ট্র্যাকিং ও স্কুল তালিকা ড্যাশবোর্ড</p>
+                        <p class="text-xs text-emerald-400">শিক্ষার্থীদের তথ্য, রুটিন দেখার স্থায়িত্ব ও কাস্টমাইজেশন ড্যাশবোর্ড</p>
                     </div>
                 </div>
                 <button onclick="closeAdminModal()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center justify-center">
@@ -330,10 +324,10 @@
                 <!-- Admin Tabs -->
                 <div class="flex border-b border-slate-200 gap-2">
                     <button onclick="switchAdminTab('data')" id="tabBtnData" class="px-4 py-2 font-bold text-xs rounded-t-xl border-b-2 border-emerald-600 text-emerald-700 bg-emerald-50">
-                        <i class="fa-solid fa-table mr-1"></i> শিক্ষার্থীদের ডাটা ও ট্র্যাকিং
+                        <i class="fa-solid fa-table mr-1"></i> শিক্ষার্থীদের ডাটা ও ডিউরেশন
                     </button>
                     <button onclick="switchAdminTab('schools')" id="tabBtnSchools" class="px-4 py-2 font-bold text-xs rounded-t-xl text-slate-500 hover:text-slate-800">
-                        <i class="fa-solid fa-school mr-1"></i> স্কুল লিস্ট ম্যানেজমেন্ট
+                        <i class="fa-solid fa-school mr-1"></i> স্কুল ম্যানেজমেন্ট
                     </button>
                     <button onclick="switchAdminTab('settings')" id="tabBtnSettings" class="px-4 py-2 font-bold text-xs rounded-t-xl text-slate-500 hover:text-slate-800">
                         <i class="fa-solid fa-image mr-1"></i> রুটিন ইমেজ লিংক
@@ -363,26 +357,26 @@
                         </div>
                     </div>
 
-                <!-- Search, QR Button and CSV Download -->
-                <div class="flex flex-col sm:flex-row justify-between items-center gap-2">
-                    <div class="relative w-full sm:w-64">
-                        <i class="fa-solid fa-search absolute left-3 top-2.5 text-slate-400 text-xs"></i>
-                        <input type="text" id="adminSearchInput" onkeyup="filterAdminData()" placeholder="নাম, ফোন বা স্কুল খুঁজুন..." 
-                            class="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-300 rounded-lg outline-none focus:border-emerald-600">
+                    <!-- Search, QR Button and CSV Download -->
+                    <div class="flex flex-col sm:flex-row justify-between items-center gap-2">
+                        <div class="relative w-full sm:w-64">
+                            <i class="fa-solid fa-search absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                            <input type="text" id="adminSearchInput" onkeyup="filterAdminData()" placeholder="নাম, ফোন বা স্কুল খুঁজুন..." 
+                                class="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-300 rounded-lg outline-none focus:border-emerald-600">
+                        </div>
+                        <div class="flex items-center gap-2 w-full sm:w-auto">
+                            <button onclick="openQRModal()" class="flex-1 sm:flex-none text-xs bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-3.5 py-2 rounded-lg transition flex items-center justify-center gap-1.5 shadow">
+                                <i class="fa-solid fa-qrcode"></i>
+                                <span>লিফলেট QR কোড</span>
+                            </button>
+                            <button onclick="exportToCSV()" class="flex-1 sm:flex-none text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3.5 py-2 rounded-lg transition flex items-center justify-center gap-1.5 shadow">
+                                <i class="fa-solid fa-file-excel"></i>
+                                <span>Excel (CSV) ডাউনলোড</span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-2 w-full sm:w-auto">
-                        <button onclick="openQRModal()" class="flex-1 sm:flex-none text-xs bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-3.5 py-2 rounded-lg transition flex items-center justify-center gap-1.5 shadow">
-                            <i class="fa-solid fa-qrcode"></i>
-                            <span>লিফলেট QR কোড</span>
-                        </button>
-                        <button onclick="exportToCSV()" class="flex-1 sm:flex-none text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3.5 py-2 rounded-lg transition flex items-center justify-center gap-1.5 shadow">
-                            <i class="fa-solid fa-file-excel"></i>
-                            <span>Excel (CSV) ডাউনলোড</span>
-                        </button>
-                    </div>
-                </div>
 
-                <!-- Submissions Data Table -->
+                    <!-- Submissions Data Table -->
                     <div class="flex-1 overflow-auto border border-slate-200 rounded-xl">
                         <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
                             <thead class="bg-slate-100 text-slate-700 uppercase font-bold sticky top-0 border-b border-slate-200">
@@ -418,7 +412,7 @@
                     <div>
                         <h4 class="font-bold text-slate-800 text-sm mb-2"><i class="fa-solid fa-list-check text-slate-600 mr-1"></i> বর্তমান স্কুলের তালিকা (বানান ঠিক বা এডিট করুন)</h4>
                         <div id="schoolListAdminContainer" class="space-y-2 max-h-80 overflow-y-auto pr-1">
-                            <!-- School Item Row -->
+                            <!-- School Item Rows -->
                         </div>
                     </div>
                 </div>
@@ -427,9 +421,9 @@
                 <div id="tabContentSettings" class="hidden space-y-4">
                     <div class="p-4 bg-amber-50 border border-amber-200 rounded-2xl space-y-3">
                         <label class="block text-xs font-bold text-amber-900">
-                            <i class="fa-solid fa-link text-amber-600 mr-1"></i> গুগল ড্রাইভ ইমেজ লিংক অথবা যেকোনো ডিরেক্ট ছবি লিংক:
+                            <i class="fa-solid fa-link text-amber-600 mr-1"></i> ইমেজের ডাইরেক্ট লিংক (ImgBB বা যেকোনো ডাইরেক্ট লিংক):
                         </label>
-                        <input type="text" id="adminRoutineUrlInput" placeholder="https://drive.google.com/file/d/..." 
+                        <input type="text" id="adminRoutineUrlInput" placeholder="https://i.ibb.co/xxxx/routine.jpg" 
                                class="w-full text-xs px-3 py-2 border border-amber-300 rounded-xl outline-none bg-white font-mono">
                         <button onclick="updateRoutineImageUrl()" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs rounded-xl transition shadow">
                             লিংক আপডেট ও সেভ করুন
@@ -627,7 +621,7 @@
             return name.length > 0 && BD_PHONE_REGEX.test(phone);
         }
 
-        /* --- FORM SUBMIT & REALTIME TRACKING --- */
+        /* --- FORM SUBMIT & SILENT DURATION TRACKING --- */
         function handleFormSubmit(event) {
             event.preventDefault();
             const name = document.getElementById('studentName').value.trim();
@@ -676,18 +670,17 @@
             // Display Routine view
             document.getElementById('displayStudentName').innerText = name;
             document.getElementById('displayStudentSchool').innerText = schoolName;
-            document.getElementById('openTimeDisplay').innerText = timeString;
 
             document.getElementById('formContainer').classList.add('hidden');
             document.getElementById('heroHeader').classList.add('hidden');
             document.getElementById('routineContainer').classList.remove('hidden');
             document.getElementById('floatingCallWrapper').classList.remove('hidden');
 
-            // Start Live Duration Timer & Update Tracking Data
-            startDurationTracking();
+            // Start Silent Duration Tracking for Admin
+            startSilentDurationTracking();
         }
 
-        function startDurationTracking() {
+        function startSilentDurationTracking() {
             viewSecondsCount = 0;
             if (liveTimerInterval) clearInterval(liveTimerInterval);
 
@@ -697,9 +690,7 @@
                 const secs = viewSecondsCount % 60;
                 const formatted = `${String(mins).padStart(2, '0')} মিনিট ${String(secs).padStart(2, '0')} সেকেন্ড`;
                 
-                document.getElementById('liveDurationTimer').innerText = formatted;
-
-                // Update entry in storage
+                // Silent update in LocalStorage for Admin Panel
                 updateCurrentSubmission({
                     durationSeconds: viewSecondsCount,
                     durationFormatted: formatted
