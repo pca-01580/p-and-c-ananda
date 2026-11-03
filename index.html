@@ -96,13 +96,13 @@
                 <!-- Brand Header Text with Color Customization -->
                 <div>
                     <h1 class="text-base sm:text-lg font-black leading-tight tracking-wide flex items-center gap-1">
-                        <span class="text-[#fffdd0]">ফিজিক্স</span>
+                        <span class="text-amber-300">ফিজিক্স</span>
                         <span class="text-emerald-400 font-extrabold text-lg">&amp;</span>
-                        <span class="text-[#fffdd0]">কেমিস্ট্রি</span>
+                        <span class="text-amber-300">কেমিস্ট্রি</span>
                     </h1>
                     <p class="text-xs font-bold tracking-wider">
                         <span class="text-emerald-400">with</span>
-                        <span class="text-[#fffdd0] ml-1">আনন্দ</span>
+                        <span class="text-amber-300 ml-1">আনন্দ</span>
                     </p>
                 </div>
             </div>
@@ -223,12 +223,12 @@
             </div>
 
             <!-- Routine Image Display -->
-            <div class="relative bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-inner group">
+            <div class="relative bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-inner group flex items-center justify-center">
                 <img id="routineImage" 
                      src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1200&auto=format&fit=crop" 
                      alt="Physics & Chemistry Routine" 
                      onclick="openFullscreenImage()"
-                     class="w-full h-auto object-contain cursor-zoom-in transition-transform duration-300 hover:scale-105 min-h-[300px]">
+                     class="w-full h-auto object-contain cursor-zoom-in transition-transform duration-300 hover:scale-105 min-h-[300px] max-h-[70vh]">
                 
                 <div onclick="openFullscreenImage()" class="absolute bottom-3 right-3 bg-slate-950/80 hover:bg-slate-950 text-white px-3 py-1.5 rounded-xl text-xs font-semibold backdrop-blur-md cursor-pointer flex items-center gap-1.5 shadow border border-slate-700">
                     <i class="fa-solid fa-magnifying-glass-plus text-amber-400"></i>
@@ -276,7 +276,7 @@
         <button onclick="closeFullscreenImage()" class="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-slate-800 text-white hover:bg-slate-700 flex items-center justify-center text-lg">
             <i class="fa-solid fa-xmark"></i>
         </button>
-        <div class="max-w-4xl max-h-[85vh] overflow-auto p-2">
+        <div class="max-w-4xl max-h-[85vh] overflow-auto p-2 flex items-center justify-center">
             <img id="fullscreenImg" src="" alt="Routine Full View" class="w-full h-auto max-h-[80vh] object-contain rounded-xl shadow-2xl">
         </div>
         <p class="text-slate-300 text-xs mt-3">জুম করতে পিন্চ বা ডাবল ট্যাপ করুন</p>
@@ -330,7 +330,7 @@
                         <i class="fa-solid fa-school mr-1"></i> স্কুল ম্যানেজমেন্ট
                     </button>
                     <button onclick="switchAdminTab('settings')" id="tabBtnSettings" class="px-4 py-2 font-bold text-xs rounded-t-xl text-slate-500 hover:text-slate-800">
-                        <i class="fa-solid fa-image mr-1"></i> রুটিন ইমেজ লিংক
+                        <i class="fa-solid fa-image mr-1"></i> রুটিন ছবি আপলোড
                     </button>
                 </div>
 
@@ -417,11 +417,30 @@
                     </div>
                 </div>
 
-                <!-- TAB 3: Routine Image Link Settings -->
+                <!-- TAB 3: Routine Image Settings with DIRECT FILE UPLOAD -->
                 <div id="tabContentSettings" class="hidden space-y-4">
+                    
+                    <!-- Direct File Upload Section (Primary & Zero-Failure) -->
+                    <div class="p-5 bg-emerald-50 border-2 border-dashed border-emerald-300 rounded-2xl space-y-3 text-center">
+                        <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto text-xl">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">গ্যালারি/কম্পিউটার থেকে সরাসরি রুটিনের ছবি আপলোড করুন</h4>
+                            <p class="text-xs text-slate-500 mt-0.5">কোনো থার্ড-পার্টি লিংকের প্রয়োজন নেই। আপনার ডিভাইস থেকে সরাসরি রুটিনের ছবিটি সিলেক্ট করুন।</p>
+                        </div>
+                        <input type="file" id="routineFileInput" accept="image/*" onchange="handleRoutineFileUpload(event)" class="hidden">
+                        <button onclick="document.getElementById('routineFileInput').click()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition shadow inline-flex items-center gap-2">
+                            <i class="fa-solid fa-image"></i>
+                            <span>📁 ছবি সিলেক্ট করুন</span>
+                        </button>
+                        <p id="uploadStatusText" class="text-xs font-bold text-emerald-700 hidden">✓ ছবিটি সফলভাবে আপলোড ও সেভ করা হয়েছে!</p>
+                    </div>
+
+                    <!-- External URL Input Option with Auto-Fixer -->
                     <div class="p-4 bg-amber-50 border border-amber-200 rounded-2xl space-y-3">
                         <label class="block text-xs font-bold text-amber-900">
-                            <i class="fa-solid fa-link text-amber-600 mr-1"></i> ইমেজের ডাইরেক্ট লিংক (ImgBB বা যেকোনো ডাইরেক্ট লিংক):
+                            <i class="fa-solid fa-link text-amber-600 mr-1"></i> অথবা অনলাইন ইমেজের ডাইরেক্ট লিংক বসান:
                         </label>
                         <input type="text" id="adminRoutineUrlInput" placeholder="https://i.ibb.co/xxxx/routine.jpg" 
                                class="w-full text-xs px-3 py-2 border border-amber-300 rounded-xl outline-none bg-white font-mono">
@@ -429,6 +448,7 @@
                             লিংক আপডেট ও সেভ করুন
                         </button>
                     </div>
+
                 </div>
 
             </div>
@@ -483,7 +503,7 @@
         let viewSecondsCount = 0;
         let secretClickCounter = 0;
 
-        // Default Routine URL
+        // Default Fallback Routine URL
         let currentRoutineUrl = "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1200&auto=format&fit=crop";
 
         // Initialize App State from LocalStorage
@@ -538,9 +558,11 @@
             }
         }
 
-        /* --- ROUTINE URL & GOOGLE DRIVE PARSER --- */
-        function processDriveUrl(url) {
+        /* --- ROUTINE URL & FILE UPLOAD HANDLERS --- */
+        function processImageLink(url) {
             if (!url) return currentRoutineUrl;
+            
+            // Google Drive direct link converter
             if (url.includes('drive.google.com')) {
                 const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
                 if (match && match[1]) {
@@ -548,6 +570,23 @@
                 }
             }
             return url;
+        }
+
+        function handleRoutineFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const dataUrl = e.target.result;
+                localStorage.setItem('ananda_routine_url', dataUrl);
+                setRoutineImageSrc(dataUrl);
+
+                const statusEl = document.getElementById('uploadStatusText');
+                statusEl.classList.remove('hidden');
+                setTimeout(() => statusEl.classList.add('hidden'), 4000);
+            };
+            reader.readAsDataURL(file);
         }
 
         function loadRoutineUrl() {
@@ -558,11 +597,11 @@
         }
 
         function setRoutineImageSrc(url) {
-            const formatted = processDriveUrl(url);
+            const formatted = processImageLink(url);
             currentRoutineUrl = formatted;
             document.getElementById('routineImage').src = formatted;
-            document.getElementById('adminRoutineUrlInput').value = url;
-            document.getElementById('directDriveLink').href = url;
+            document.getElementById('adminRoutineUrlInput').value = url.startsWith('data:') ? '[uploaded image]' : url;
+            document.getElementById('directDriveLink').href = url.startsWith('data:') ? '#' : url;
         }
 
         /* --- PHONE & FORM VALIDATION --- */
