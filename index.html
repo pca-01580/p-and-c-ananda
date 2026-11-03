@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Physics & Chemistry with Ananda | রুটিন ও তথ্য</title>
+    <title>Physics & Chemistry with Ananda | রুটিন ও তথ্য পোর্টাল</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Font: Hind Siliguri & Inter -->
+    <!-- Google Fonts: Hind Siliguri & Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Canvas Confetti -->
+    <!-- Canvas Confetti CDN -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <!-- QRCode JS Library -->
+    <!-- QRCode JS Library CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
     <script>
@@ -21,14 +21,12 @@
                 extend: {
                     colors: {
                         brand: {
-                            50: '#f0fdf4',
-                            100: '#dcfce7',
-                            500: '#16a34a',
-                            600: '#15803d',
-                            700: '#166534',
-                            900: '#052e16',
-                            accent: '#f59e0b',
-                            gold: '#fbbf24'
+                            dark: '#031209',
+                            card: '#082112',
+                            gold: '#fbbf24',
+                            goldHover: '#f59e0b',
+                            emerald: '#10b981',
+                            emeraldDark: '#059669',
                         }
                     },
                     fontFamily: {
@@ -41,85 +39,83 @@
     <style>
         body {
             font-family: 'Hind Siliguri', 'Inter', sans-serif;
-            background: linear-gradient(135deg, #051a0e 0%, #062b16 50%, #021209 100%);
+            background: radial-gradient(circle at top, #082916 0%, #031209 70%, #010a05 100%);
             min-height: 100vh;
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(14px);
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(16px);
         }
         .pulse-btn {
             animation: pulse-glow 2s infinite;
         }
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 15px rgba(22, 163, 74, 0.4); }
+            0%, 100% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
             50% { box-shadow: 0 0 25px rgba(251, 191, 36, 0.7); }
         }
-
-        /* Continuous Attention Bounce for Floating Call Button */
         @keyframes float-bounce {
-            0%, 100% { transform: translateY(0) scale(1); box-shadow: 0 10px 25px rgba(234, 179, 8, 0.6); }
-            50% { transform: translateY(-7px) scale(1.03); box-shadow: 0 18px 35px rgba(234, 179, 8, 0.85); }
+            0%, 100% { transform: translateY(0) scale(1); box-shadow: 0 10px 25px rgba(245, 158, 11, 0.6); }
+            50% { transform: translateY(-7px) scale(1.02); box-shadow: 0 18px 35px rgba(245, 158, 11, 0.85); }
         }
         .animate-float-call {
-            animation: float-bounce 2s infinite ease-in-out;
+            animation: float-bounce 2.2s infinite ease-in-out;
         }
     </style>
 </head>
 <body class="text-slate-800 antialiased flex flex-col justify-between min-h-screen relative">
 
-    <!-- Navigation Header with Logo on LEFT and Text Header (No visible Admin or QR buttons for students) -->
+    <!-- Header (Title & Logo with Secret 3-Click Admin Entry) -->
     <header class="w-full bg-slate-950/90 backdrop-blur-md border-b border-emerald-900/60 sticky top-0 z-40">
-        <div class="max-w-4xl mx-auto px-4 py-2.5 flex justify-between items-center">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
             
-            <!-- Left Side: Custom Brand Logo + Title (Secret 3-Click Admin Entry) -->
+            <!-- Left Side: Brand Logo + Text Title -->
             <div class="flex items-center space-x-3 cursor-pointer select-none" onclick="handleSecretAdminClick()" title="ফিজিক্স & কেমিস্ট্রি with আনন্দ">
-                <!-- Brand Vector Logo matching flask/atom theme -->
+                <!-- Custom Flask/Atom Logo -->
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-950 via-slate-900 to-black p-1 border-2 border-emerald-500/40 shadow-lg flex items-center justify-center relative overflow-hidden shrink-0">
                     <svg viewBox="0 0 100 100" class="w-full h-full">
-                        <!-- Atom Orbit top left -->
                         <ellipse cx="35" cy="30" rx="18" ry="7" fill="none" stroke="#fbbf24" stroke-width="2.5" transform="rotate(-30 35 30)"/>
                         <ellipse cx="35" cy="30" rx="18" ry="7" fill="none" stroke="#4ade80" stroke-width="2.5" transform="rotate(30 35 30)"/>
                         <circle cx="35" cy="30" r="3.5" fill="#ffffff"/>
-                        <!-- Chemistry Flask Right -->
                         <path d="M68,25 L76,25 L76,38 L88,68 C90,73 86,78 80,78 L64,78 C58,78 54,73 56,68 L68,38 Z" fill="none" stroke="#fbbf24" stroke-width="3.5" stroke-linejoin="round"/>
                         <path d="M60,65 L84,65 L80,75 L64,75 Z" fill="#22c55e" opacity="0.8"/>
                         <circle cx="72" cy="55" r="2.5" fill="#ffffff"/>
                         <circle cx="77" cy="46" r="2" fill="#fbbf24"/>
-                        <!-- Molecule bottom left -->
-                        <circle cx="18" cy="72" r="3" fill="#fbbf24"/>
-                        <circle cx="28" cy="80" r="4" fill="#ffffff"/>
-                        <line x1="18" y1="72" x2="28" y2="80" stroke="#4ade80" stroke-width="2"/>
                     </svg>
                 </div>
 
-                <!-- Brand Header Text with Color Customization -->
+                <!-- Brand Header Text -->
                 <div>
                     <h1 class="text-base sm:text-lg font-black leading-tight tracking-wide flex items-center gap-1">
-                        <span class="text-amber-300">ফিজিক্স</span>
+                        <span class="text-amber-400">ফিজিক্স</span>
                         <span class="text-emerald-400 font-extrabold text-lg">&amp;</span>
-                        <span class="text-amber-300">কেমিস্ট্রি</span>
+                        <span class="text-amber-400">কেমিস্ট্রি</span>
                     </h1>
                     <p class="text-xs font-bold tracking-wider">
                         <span class="text-emerald-400">with</span>
-                        <span class="text-amber-300 ml-1">আনন্দ</span>
+                        <span class="text-amber-400 ml-1">আনন্দ</span>
                     </p>
                 </div>
             </div>
             
-            <!-- Hidden Admin Secret Trigger Icon (Invisible to Students) -->
-            <div class="text-slate-800 select-none cursor-pointer p-1" onclick="handleSecretAdminClick()">
-                <i class="fa-solid fa-shield-halved text-[10px] opacity-10 hover:opacity-100 text-slate-500 transition" title="Secret Admin"></i>
+            <!-- Hidden Secret Trigger Dot for Admin -->
+            <div class="text-slate-950 select-none cursor-pointer p-2 opacity-5 hover:opacity-100 transition text-xs" onclick="handleSecretAdminClick()">
+                <i class="fa-solid fa-user-shield text-slate-500"></i>
             </div>
         </div>
     </header>
 
-    <!-- Main Container -->
+    <!-- Custom Notification Toast -->
+    <div id="toast" class="fixed top-16 left-1/2 transform -translate-x-1/2 z-50 hidden bg-slate-900 text-white text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-2xl border border-emerald-500/40 flex items-center gap-2 transition-all">
+        <i id="toastIcon" class="fa-solid fa-circle-info text-emerald-400"></i>
+        <span id="toastMsg">মেসেজ নোটিফিকেশন</span>
+    </div>
+
+    <!-- Main Content Container -->
     <main class="max-w-xl w-full mx-auto px-4 py-6 flex-grow flex flex-col justify-center">
 
-        <!-- Banner / Hero Welcome Card -->
+        <!-- Welcome Banner Card -->
         <div id="heroHeader" class="mb-5 text-center">
-            <div class="inline-flex items-center gap-1.5 px-4 py-1.5 bg-emerald-500/10 border border-emerald-400/30 text-emerald-300 rounded-full text-xs font-bold mb-3 tracking-wide">
+            <div class="inline-flex items-center gap-1.5 px-4 py-1 bg-emerald-500/10 border border-emerald-400/30 text-emerald-300 rounded-full text-xs font-bold mb-3 tracking-wide">
                 <i class="fa-solid fa-flask text-amber-400"></i>
                 <span>অফিসিয়াল রুটিন পোর্টাল</span>
             </div>
@@ -131,27 +127,26 @@
             </p>
         </div>
 
-        <!-- Student Registration Form Card -->
+        <!-- Student Form Card -->
         <div id="formContainer" class="glass-card rounded-3xl p-6 sm:p-8 shadow-2xl border border-emerald-100/30 relative overflow-hidden">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
 
             <form id="studentForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
                 
-                <!-- Student Name Input -->
+                <!-- Student Name -->
                 <div>
                     <label class="block text-sm font-bold text-slate-800 mb-1.5">
                         <i class="fa-solid fa-user text-emerald-600 mr-1.5"></i> তোমার নাম <span class="text-rose-500">*</span>
                     </label>
                     <input type="text" id="studentName" required
                         placeholder="যেমন: মোঃ সাকিব হাসান" 
-                        oninput="validateForm()"
                         class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition text-slate-800 placeholder-slate-400 font-medium text-base">
                     <p id="nameError" class="hidden text-xs text-rose-500 font-medium mt-1 flex items-center gap-1">
                         <i class="fa-solid fa-circle-exclamation"></i> অনুগ্রহ করে তোমার নাম টাইপ করো।
                     </p>
                 </div>
 
-                <!-- Phone Number Input with 11-Digit BD Validation -->
+                <!-- Phone Number (11-Digit BD Regex Validation) -->
                 <div>
                     <div class="flex justify-between items-center mb-1.5">
                         <label class="block text-sm font-bold text-slate-800">
@@ -173,7 +168,7 @@
                     </p>
                 </div>
 
-                <!-- School Selection Dropdown -->
+                <!-- School Selection -->
                 <div>
                     <label class="block text-sm font-bold text-slate-800 mb-1.5">
                         <i class="fa-solid fa-school text-emerald-600 mr-1.5"></i> তোমার স্কুল <span class="text-rose-500">*</span>
@@ -181,10 +176,9 @@
                     <select id="studentSchool" required onchange="onSchoolSelectChange()"
                         class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition text-slate-800 font-medium text-base bg-white">
                         <option value="" disabled selected>-- তালিকা থেকে স্কুল সিলেক্ট করো --</option>
-                        <!-- Dynamic options loaded via JS -->
                     </select>
                     
-                    <!-- Custom School Field (Appears when "অন্যান্য" is chosen) -->
+                    <!-- Custom School Field -->
                     <div id="customSchoolWrapper" class="hidden mt-2">
                         <input type="text" id="customSchoolInput" 
                             placeholder="তোমার স্কুলের নাম লিখুন..." 
@@ -202,13 +196,13 @@
             </form>
         </div>
 
-        <!-- Routine Display Section (Clean Student View - No Timer Visible) -->
+        <!-- Routine Display Section (Clean Student View - Timer Hidden) -->
         <div id="routineContainer" class="hidden glass-card rounded-3xl p-5 sm:p-6 shadow-2xl border border-white/20 text-center relative animate-fade-in mb-16">
             
             <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4 text-left">
                 <div>
                     <span class="text-xs font-bold text-emerald-700 bg-emerald-100 border border-emerald-300 px-2.5 py-1 rounded-full">
-                        <i class="fa-solid fa-circle-check mr-1"></i> রুটিন দেখতে পেয়েছো!
+                        <i class="fa-solid fa-circle-check mr-1"></i> রুটিন সফলভাবে উন্মুক্ত হয়েছে!
                     </span>
                     <h3 class="text-xl font-bold text-slate-900 mt-1.5">
                         স্বাগতম, <span id="displayStudentName" class="text-emerald-700"></span>!
@@ -223,12 +217,13 @@
             </div>
 
             <!-- Routine Image Display -->
-            <div class="relative bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-inner group flex items-center justify-center">
+            <div class="relative bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-inner group flex items-center justify-center min-h-[300px]">
                 <img id="routineImage" 
-                     src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1200&auto=format&fit=crop" 
+                     src="./routine.jpg" 
+                     onerror="handleImageError(this)"
                      alt="Physics & Chemistry Routine" 
                      onclick="openFullscreenImage()"
-                     class="w-full h-auto object-contain cursor-zoom-in transition-transform duration-300 hover:scale-105 min-h-[300px] max-h-[70vh]">
+                     class="w-full h-auto object-contain cursor-zoom-in transition-transform duration-300 hover:scale-105 max-h-[70vh]">
                 
                 <div onclick="openFullscreenImage()" class="absolute bottom-3 right-3 bg-slate-950/80 hover:bg-slate-950 text-white px-3 py-1.5 rounded-xl text-xs font-semibold backdrop-blur-md cursor-pointer flex items-center gap-1.5 shadow border border-slate-700">
                     <i class="fa-solid fa-magnifying-glass-plus text-amber-400"></i>
@@ -236,7 +231,7 @@
                 </div>
             </div>
 
-            <!-- Download & Share Action Buttons (Tracked silently for Admin) -->
+            <!-- Download & Share Actions -->
             <div class="mt-4 flex flex-col sm:flex-row gap-2.5">
                 <button onclick="handleImageDownload()" class="flex-1 py-3 px-4 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-2 shadow border border-slate-700">
                     <i class="fa-solid fa-download text-amber-400"></i>
@@ -252,7 +247,7 @@
 
     </main>
 
-    <!-- FLOATING ANIMATED CALL BUTTON -->
+    <!-- Floating Pulse Call Button -->
     <div id="floatingCallWrapper" class="hidden fixed bottom-4 left-0 right-0 z-50 px-4 pointer-events-none">
         <div class="max-w-md mx-auto flex justify-center">
             <a href="tel:01521565771" 
@@ -260,7 +255,7 @@
                 <span class="w-8 h-8 rounded-full bg-slate-950 text-amber-400 flex items-center justify-center text-base animate-pulse">
                     <i class="fa-solid fa-phone"></i>
                 </span>
-                <span>বিস্তারিত জানতে কল করো: <strong>01521565771</strong></span>
+                <span>📞 বিস্তারিত জানতে কল করো: <strong>01521565771</strong></span>
             </a>
         </div>
     </div>
@@ -271,7 +266,7 @@
         <p class="text-[11px] text-slate-600 mt-0.5">যোগাযোগ ও ভর্তি সংক্রান্ত তথ্য: 01521565771 📞</p>
     </footer>
 
-    <!-- FULLSCREEN IMAGE MODAL -->
+    <!-- Fullscreen Image Modal -->
     <div id="imageModal" class="fixed inset-0 bg-slate-950/95 z-50 hidden flex flex-col items-center justify-center p-2 sm:p-4">
         <button onclick="closeFullscreenImage()" class="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-slate-800 text-white hover:bg-slate-700 flex items-center justify-center text-lg">
             <i class="fa-solid fa-xmark"></i>
@@ -279,14 +274,14 @@
         <div class="max-w-4xl max-h-[85vh] overflow-auto p-2 flex items-center justify-center">
             <img id="fullscreenImg" src="" alt="Routine Full View" class="w-full h-auto max-h-[80vh] object-contain rounded-xl shadow-2xl">
         </div>
-        <p class="text-slate-300 text-xs mt-3">জুম করতে পিন্চ বা ডাবল ট্যাপ করুন</p>
+        <p class="text-slate-300 text-xs mt-3">জুম করতে ডাবল ট্যাপ বা পিন্চ করুন</p>
     </div>
 
     <!-- SECRET ADMIN PANEL MODAL (PIN: 1234) -->
     <div id="adminModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-4">
         <div class="bg-white rounded-3xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden border border-slate-200">
             
-            <!-- Admin Header -->
+            <!-- Admin Modal Header -->
             <div class="bg-slate-950 text-white px-5 py-3.5 flex justify-between items-center border-b border-slate-800">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-user-shield text-amber-400 text-xl"></i>
@@ -300,7 +295,7 @@
                 </button>
             </div>
 
-            <!-- PIN Login Screen -->
+            <!-- Admin PIN Screen -->
             <div id="adminPinScreen" class="p-8 text-center my-auto">
                 <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
                     <i class="fa-solid fa-lock"></i>
@@ -318,26 +313,28 @@
                 </div>
             </div>
 
-            <!-- Admin Main Screen (Data + Controls) -->
+            <!-- Admin Dashboard Tabs & Content -->
             <div id="adminDataScreen" class="hidden flex-col flex-1 overflow-hidden p-4 sm:p-6 space-y-4">
                 
-                <!-- Admin Tabs -->
-                <div class="flex border-b border-slate-200 gap-2">
-                    <button onclick="switchAdminTab('data')" id="tabBtnData" class="px-4 py-2 font-bold text-xs rounded-t-xl border-b-2 border-emerald-600 text-emerald-700 bg-emerald-50">
-                        <i class="fa-solid fa-table mr-1"></i> শিক্ষার্থীদের ডাটা ও ডিউরেশন
+                <!-- Admin Navigation Tabs -->
+                <div class="flex border-b border-slate-200 gap-2 overflow-x-auto pb-1">
+                    <button onclick="switchAdminTab('data')" id="tabBtnData" class="px-3.5 py-2 font-bold text-xs rounded-t-xl border-b-2 border-emerald-600 text-emerald-700 bg-emerald-50 whitespace-nowrap">
+                        <i class="fa-solid fa-table mr-1"></i> শিক্ষার্থীদের ডাটা
                     </button>
-                    <button onclick="switchAdminTab('schools')" id="tabBtnSchools" class="px-4 py-2 font-bold text-xs rounded-t-xl text-slate-500 hover:text-slate-800">
+                    <button onclick="switchAdminTab('qr')" id="tabBtnQR" class="px-3.5 py-2 font-bold text-xs rounded-t-xl text-slate-500 hover:text-slate-800 whitespace-nowrap">
+                        <i class="fa-solid fa-qrcode mr-1"></i> লিফলেট QR কোড
+                    </button>
+                    <button onclick="switchAdminTab('schools')" id="tabBtnSchools" class="px-3.5 py-2 font-bold text-xs rounded-t-xl text-slate-500 hover:text-slate-800 whitespace-nowrap">
                         <i class="fa-solid fa-school mr-1"></i> স্কুল ম্যানেজমেন্ট
                     </button>
-                    <button onclick="switchAdminTab('settings')" id="tabBtnSettings" class="px-4 py-2 font-bold text-xs rounded-t-xl text-slate-500 hover:text-slate-800">
-                        <i class="fa-solid fa-image mr-1"></i> রুটিন ছবি আপলোড
+                    <button onclick="switchAdminTab('settings')" id="tabBtnSettings" class="px-3.5 py-2 font-bold text-xs rounded-t-xl text-slate-500 hover:text-slate-800 whitespace-nowrap">
+                        <i class="fa-solid fa-image mr-1"></i> রুটিন ছবি সেটিংস
                     </button>
                 </div>
 
-                <!-- TAB 1: Student Data & Analytics Table -->
+                <!-- TAB 1: Submissions Data & Analytics -->
                 <div id="tabContentData" class="space-y-3 flex-1 flex flex-col overflow-hidden">
-                    
-                    <!-- Stats Bar -->
+                    <!-- Analytics Grid -->
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
                         <div class="p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl">
                             <div class="text-[11px] text-slate-500 font-medium">মোট সাবমিশন</div>
@@ -357,26 +354,20 @@
                         </div>
                     </div>
 
-                    <!-- Search, QR Button and CSV Download -->
+                    <!-- Search & CSV Export Controls -->
                     <div class="flex flex-col sm:flex-row justify-between items-center gap-2">
                         <div class="relative w-full sm:w-64">
                             <i class="fa-solid fa-search absolute left-3 top-2.5 text-slate-400 text-xs"></i>
                             <input type="text" id="adminSearchInput" onkeyup="filterAdminData()" placeholder="নাম, ফোন বা স্কুল খুঁজুন..." 
                                 class="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-300 rounded-lg outline-none focus:border-emerald-600">
                         </div>
-                        <div class="flex items-center gap-2 w-full sm:w-auto">
-                            <button onclick="openQRModal()" class="flex-1 sm:flex-none text-xs bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-3.5 py-2 rounded-lg transition flex items-center justify-center gap-1.5 shadow">
-                                <i class="fa-solid fa-qrcode"></i>
-                                <span>লিফলেট QR কোড</span>
-                            </button>
-                            <button onclick="exportToCSV()" class="flex-1 sm:flex-none text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3.5 py-2 rounded-lg transition flex items-center justify-center gap-1.5 shadow">
-                                <i class="fa-solid fa-file-excel"></i>
-                                <span>Excel (CSV) ডাউনলোড</span>
-                            </button>
-                        </div>
+                        <button onclick="exportToCSV()" class="w-full sm:w-auto text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3.5 py-2 rounded-lg transition flex items-center justify-center gap-1.5 shadow">
+                            <i class="fa-solid fa-file-excel"></i>
+                            <span>Excel (CSV) ডাউনলোড</span>
+                        </button>
                     </div>
 
-                    <!-- Submissions Data Table -->
+                    <!-- Data Table -->
                     <div class="flex-1 overflow-auto border border-slate-200 rounded-xl">
                         <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
                             <thead class="bg-slate-100 text-slate-700 uppercase font-bold sticky top-0 border-b border-slate-200">
@@ -387,65 +378,82 @@
                                     <th class="p-2.5">স্কুলের নাম</th>
                                     <th class="p-2.5">দেখা শুরু</th>
                                     <th class="p-2.5">কতক্ষণ দেখেছে</th>
-                                    <th class="p-2.5 text-center">ছবি সেভ করেছে?</th>
+                                    <th class="p-2.5 text-center">ছবি সেভ?</th>
                                     <th class="p-2.5 text-center">ড্রাইভ খুলেছে?</th>
-                                    <th class="p-2.5 text-center">ডিলিট</th>
+                                    <th class="p-2.5 text-center">অ্যাকশন</th>
                                 </tr>
                             </thead>
                             <tbody id="studentTableBody" class="divide-y divide-slate-100">
-                                <!-- Dynamic rows -->
+                                <!-- Dynamic Rows -->
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                <!-- TAB 2: Dynamic School Management -->
+                <!-- TAB 2: Leaflet QR Code Generator -->
+                <div id="tabContentQR" class="hidden flex-col items-center justify-center p-4 text-center space-y-4 my-auto">
+                    <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-qrcode"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-base">লিফলেটের জন্য প্রিন্ট উপযোগী QR কোড</h4>
+                        <p class="text-xs text-slate-500 max-w-sm mt-1">এই QR কোডটি আপনার প্রিন্টিং প্রেসে বা লিফলেটে বসিয়ে দিন। শিক্ষার্থীরা স্ক্যান করলেই এই পেজে চলে আসবে।</p>
+                    </div>
+                    
+                    <div id="qrcode" class="p-4 bg-white border-2 border-emerald-100 rounded-2xl shadow-md"></div>
+                    
+                    <button onclick="downloadQRCode()" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition flex items-center gap-2 shadow">
+                        <i class="fa-solid fa-download"></i>
+                        <span>QR কোড ইমেজ সেভ করুন</span>
+                    </button>
+                </div>
+
+                <!-- TAB 3: Dynamic School List Management -->
                 <div id="tabContentSchools" class="hidden space-y-4 overflow-y-auto">
                     <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
                         <h4 class="font-bold text-slate-800 text-sm mb-1"><i class="fa-solid fa-plus-circle text-emerald-600 mr-1"></i> নতুন স্কুল যোগ করুন</h4>
                         <div class="flex gap-2">
-                            <input type="text" id="newSchoolInput" placeholder="নতুন স্কুলের নাম টাইপ করুন..." class="flex-1 px-3 py-2 text-xs border border-slate-300 rounded-xl outline-none focus:border-emerald-600">
+                            <input type="text" id="newSchoolInput" placeholder="স্কুলের সঠিক নাম টাইপ করুন..." class="flex-1 px-3 py-2 text-xs border border-slate-300 rounded-xl outline-none focus:border-emerald-600">
                             <button onclick="addNewSchoolFromAdmin()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow">যোগ করুন</button>
                         </div>
                     </div>
 
                     <div>
-                        <h4 class="font-bold text-slate-800 text-sm mb-2"><i class="fa-solid fa-list-check text-slate-600 mr-1"></i> বর্তমান স্কুলের তালিকা (বানান ঠিক বা এডিট করুন)</h4>
+                        <h4 class="font-bold text-slate-800 text-sm mb-2"><i class="fa-solid fa-list-check text-slate-600 mr-1"></i> ড্রপডাউনের বর্তমান স্কুলের তালিকা (এডিট/ডিলিট করুন)</h4>
                         <div id="schoolListAdminContainer" class="space-y-2 max-h-80 overflow-y-auto pr-1">
                             <!-- School Item Rows -->
                         </div>
                     </div>
                 </div>
 
-                <!-- TAB 3: Routine Image Settings with DIRECT FILE UPLOAD -->
+                <!-- TAB 4: Routine Image Upload & URL Settings -->
                 <div id="tabContentSettings" class="hidden space-y-4">
                     
-                    <!-- Direct File Upload Section (Primary & Zero-Failure) -->
+                    <!-- Direct File Upload -->
                     <div class="p-5 bg-emerald-50 border-2 border-dashed border-emerald-300 rounded-2xl space-y-3 text-center">
                         <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto text-xl">
                             <i class="fa-solid fa-cloud-arrow-up"></i>
                         </div>
                         <div>
-                            <h4 class="font-bold text-slate-900 text-sm">গ্যালারি/কম্পিউটার থেকে সরাসরি রুটিনের ছবি আপলোড করুন</h4>
-                            <p class="text-xs text-slate-500 mt-0.5">কোনো থার্ড-পার্টি লিংকের প্রয়োজন নেই। আপনার ডিভাইস থেকে সরাসরি রুটিনের ছবিটি সিলেক্ট করুন।</p>
+                            <h4 class="font-bold text-slate-900 text-sm">গ্যালারি / কম্পিউটার থেকে সরাসরি নতুন রুটিন ছবি সিলেক্ট করুন</h4>
+                            <p class="text-xs text-slate-500 mt-0.5">আপনার ডিভাইস থেকে যেকোনো ছবি আপলোড করুন, তা সাথে সাথে ডিভাইসে সেভ হয়ে যাবে।</p>
                         </div>
                         <input type="file" id="routineFileInput" accept="image/*" onchange="handleRoutineFileUpload(event)" class="hidden">
                         <button onclick="document.getElementById('routineFileInput').click()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition shadow inline-flex items-center gap-2">
                             <i class="fa-solid fa-image"></i>
                             <span>📁 ছবি সিলেক্ট করুন</span>
                         </button>
-                        <p id="uploadStatusText" class="text-xs font-bold text-emerald-700 hidden">✓ ছবিটি সফলভাবে আপলোড ও সেভ করা হয়েছে!</p>
                     </div>
 
-                    <!-- External URL Input Option with Auto-Fixer -->
+                    <!-- Online Image URL Input -->
                     <div class="p-4 bg-amber-50 border border-amber-200 rounded-2xl space-y-3">
                         <label class="block text-xs font-bold text-amber-900">
-                            <i class="fa-solid fa-link text-amber-600 mr-1"></i> অথবা অনলাইন ইমেজের ডাইরেক্ট লিংক বসান:
+                            <i class="fa-solid fa-link text-amber-600 mr-1"></i> অথবা ড্রাইভ / অনলাইন ইমেজের ইউআরএল (URL) লিংক বসান:
                         </label>
                         <input type="text" id="adminRoutineUrlInput" placeholder="https://i.ibb.co/xxxx/routine.jpg" 
                                class="w-full text-xs px-3 py-2 border border-amber-300 rounded-xl outline-none bg-white font-mono">
                         <button onclick="updateRoutineImageUrl()" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs rounded-xl transition shadow">
-                            লিংক আপডেট ও সেভ করুন
+                            লিংক সেভ ও আপডেট করুন
                         </button>
                     </div>
 
@@ -456,33 +464,12 @@
         </div>
     </div>
 
-    <!-- QR CODE GENERATOR MODAL -->
-    <div id="qrModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl w-full max-w-sm p-6 shadow-2xl text-center border border-slate-200 relative">
-            <button onclick="closeQRModal()" class="absolute right-4 top-4 w-8 h-8 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 flex items-center justify-center">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto mb-2 text-xl">
-                <i class="fa-solid fa-qrcode"></i>
-            </div>
-            <h3 class="font-bold text-slate-900 text-lg">লিফলেটের QR কোড</h3>
-            <p class="text-xs text-slate-500 mb-4">এই QR কোডটি আপনার প্রিন্ট লিফলেটে বসিয়ে দিন। শিক্ষার্থীরা স্ক্যান করলে এই ফর্মে পৌঁছাবে।</p>
-            
-            <div id="qrcode" class="flex justify-center p-3 bg-slate-50 border rounded-2xl mx-auto mb-4 w-fit"></div>
-            
-            <button onclick="downloadQRCode()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-2">
-                <i class="fa-solid fa-download"></i>
-                <span>QR কোড পিকচার সেভ করুন</span>
-            </button>
-        </div>
-    </div>
-
     <!-- CORE JAVASCRIPT SYSTEM -->
     <script>
-        // Regex for Valid BD Mobile Operators (013, 014, 015, 016, 017, 018, 019)
+        // Regex for BD Phone Number (013 - 019)
         const BD_PHONE_REGEX = /^01[3-9]\d{8}$/;
 
-        // Initial Default School List
+        // Pre-populated Default School Options
         const DEFAULT_SCHOOLS = [
             "ময়মনসিংহ জিলা স্কুল",
             "বিদ্যাময়ী সরকারি বালিকা উচ্চ বিদ্যালয়",
@@ -503,14 +490,23 @@
         let viewSecondsCount = 0;
         let secretClickCounter = 0;
 
-        // Default Fallback Routine URL
-        let currentRoutineUrl = "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1200&auto=format&fit=crop";
+        // Default Routine Path
+        let currentRoutineUrl = localStorage.getItem('ananda_routine_url') || './routine.jpg';
 
-        // Initialize App State from LocalStorage
+        // Initialize App State
         window.addEventListener('DOMContentLoaded', () => {
             loadSchools();
             loadRoutineUrl();
         });
+
+        // Helper Notification Toast
+        function showToast(message, iconClass = "fa-circle-check") {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = message;
+            document.getElementById('toastIcon').className = `fa-solid ${iconClass} text-emerald-400`;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3500);
+        }
 
         /* --- SCHOOL MANAGING SYSTEM --- */
         function loadSchools() {
@@ -558,11 +554,9 @@
             }
         }
 
-        /* --- ROUTINE URL & FILE UPLOAD HANDLERS --- */
+        /* --- ROUTINE URL & FALLBACK HANDLING --- */
         function processImageLink(url) {
-            if (!url) return currentRoutineUrl;
-            
-            // Google Drive direct link converter
+            if (!url) return './routine.jpg';
             if (url.includes('drive.google.com')) {
                 const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
                 if (match && match[1]) {
@@ -570,6 +564,12 @@
                 }
             }
             return url;
+        }
+
+        function handleImageError(imgElement) {
+            // Fallback placeholder if local routine.jpg or custom URL fails to load
+            imgElement.onerror = null; 
+            imgElement.src = "https://placehold.co/1000x1200/082112/fbbf24?text=Physics+%26+Chemistry+Routine+Coming+Soon";
         }
 
         function handleRoutineFileUpload(event) {
@@ -581,10 +581,7 @@
                 const dataUrl = e.target.result;
                 localStorage.setItem('ananda_routine_url', dataUrl);
                 setRoutineImageSrc(dataUrl);
-
-                const statusEl = document.getElementById('uploadStatusText');
-                statusEl.classList.remove('hidden');
-                setTimeout(() => statusEl.classList.add('hidden'), 4000);
+                showToast("রুটিন ছবি সফলভাবে আপডেট করা হয়েছে!");
             };
             reader.readAsDataURL(file);
         }
@@ -593,6 +590,8 @@
             const saved = localStorage.getItem('ananda_routine_url');
             if (saved) {
                 setRoutineImageSrc(saved);
+            } else {
+                setRoutineImageSrc('./routine.jpg');
             }
         }
 
@@ -600,7 +599,7 @@
             const formatted = processImageLink(url);
             currentRoutineUrl = formatted;
             document.getElementById('routineImage').src = formatted;
-            document.getElementById('adminRoutineUrlInput').value = url.startsWith('data:') ? '[uploaded image]' : url;
+            document.getElementById('adminRoutineUrlInput').value = url.startsWith('data:') ? '[uploaded image file]' : url;
             document.getElementById('directDriveLink').href = url.startsWith('data:') ? '#' : url;
         }
 
@@ -653,13 +652,6 @@
             }
         }
 
-        function validateForm() {
-            const name = document.getElementById('studentName').value.trim();
-            const phone = document.getElementById('studentPhone').value.trim();
-            if (name) document.getElementById('nameError').classList.add('hidden');
-            return name.length > 0 && BD_PHONE_REGEX.test(phone);
-        }
-
         /* --- FORM SUBMIT & SILENT DURATION TRACKING --- */
         function handleFormSubmit(event) {
             event.preventDefault();
@@ -681,12 +673,11 @@
                 return;
             }
 
-            // Confetti animation
+            // Confetti Blast
             try {
-                confetti({ particleCount: 110, spread: 85, origin: { y: 0.6 } });
+                confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
             } catch (e) {}
 
-            // Save Initial Entry
             const now = new Date();
             const timeString = now.toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             
@@ -706,7 +697,7 @@
 
             saveSubmissionRecord(newRecord);
 
-            // Display Routine view
+            // Populate Student Routine View
             document.getElementById('displayStudentName').innerText = name;
             document.getElementById('displayStudentSchool').innerText = schoolName;
 
@@ -715,7 +706,7 @@
             document.getElementById('routineContainer').classList.remove('hidden');
             document.getElementById('floatingCallWrapper').classList.remove('hidden');
 
-            // Start Silent Duration Tracking for Admin
+            // Start Silent Duration Tracking
             startSilentDurationTracking();
         }
 
@@ -729,7 +720,6 @@
                 const secs = viewSecondsCount % 60;
                 const formatted = `${String(mins).padStart(2, '0')} মিনিট ${String(secs).padStart(2, '0')} সেকেন্ড`;
                 
-                // Silent update in LocalStorage for Admin Panel
                 updateCurrentSubmission({
                     durationSeconds: viewSecondsCount,
                     durationFormatted: formatted
@@ -769,7 +759,7 @@
             document.getElementById('floatingCallWrapper').classList.add('hidden');
         }
 
-        /* --- STORAGE MANAGEMENT & ANALYTICS --- */
+        /* --- STORAGE MANAGEMENT --- */
         function getSubmissions() {
             const saved = localStorage.getItem('ananda_student_submissions');
             return saved ? JSON.parse(saved) : [];
@@ -796,16 +786,17 @@
             list = list.filter(item => item.id !== id);
             localStorage.setItem('ananda_student_submissions', JSON.stringify(list));
             renderAdminTable(list);
+            showToast("এন্ট্রি সফলভাবে মুছে ফেলা হয়েছে!");
         }
 
-        /* --- ADMIN PANEL & SECRET ACCESS --- */
+        /* --- SECRET ADMIN ACCESS --- */
         function handleSecretAdminClick() {
             secretClickCounter++;
             if (secretClickCounter >= 3) {
                 secretClickCounter = 0;
                 toggleAdminPanel();
             }
-            setTimeout(() => secretClickCounter = 0, 2000);
+            setTimeout(() => secretClickCounter = 0, 1800);
         }
 
         function toggleAdminPanel() {
@@ -826,6 +817,7 @@
                 
                 renderAdminTable(getSubmissions());
                 renderAdminSchoolList();
+                generateQRCode();
             } else {
                 document.getElementById('pinError').classList.remove('hidden');
             }
@@ -833,24 +825,34 @@
 
         function switchAdminTab(tab) {
             document.getElementById('tabContentData').classList.add('hidden');
+            document.getElementById('tabContentQR').classList.add('hidden');
             document.getElementById('tabContentSchools').classList.add('hidden');
             document.getElementById('tabContentSettings').classList.add('hidden');
 
-            document.getElementById('tabBtnData').className = "px-4 py-2 font-bold text-xs rounded-t-xl text-slate-500 hover:text-slate-800";
-            document.getElementById('tabBtnSchools').className = "px-4 py-2 font-bold text-xs rounded-t-xl text-slate-500 hover:text-slate-800";
-            document.getElementById('tabBtnSettings').className = "px-4 py-2 font-bold text-xs rounded-t-xl text-slate-500 hover:text-slate-800";
+            const inactiveClass = "px-3.5 py-2 font-bold text-xs rounded-t-xl text-slate-500 hover:text-slate-800 whitespace-nowrap";
+            const activeClass = "px-3.5 py-2 font-bold text-xs rounded-t-xl border-b-2 border-emerald-600 text-emerald-700 bg-emerald-50 whitespace-nowrap";
+
+            document.getElementById('tabBtnData').className = inactiveClass;
+            document.getElementById('tabBtnQR').className = inactiveClass;
+            document.getElementById('tabBtnSchools').className = inactiveClass;
+            document.getElementById('tabBtnSettings').className = inactiveClass;
 
             if (tab === 'data') {
                 document.getElementById('tabContentData').classList.remove('hidden');
-                document.getElementById('tabBtnData').className = "px-4 py-2 font-bold text-xs rounded-t-xl border-b-2 border-emerald-600 text-emerald-700 bg-emerald-50";
+                document.getElementById('tabBtnData').className = activeClass;
                 renderAdminTable(getSubmissions());
+            } else if (tab === 'qr') {
+                document.getElementById('tabContentQR').classList.remove('hidden');
+                document.getElementById('tabContentQR').classList.add('flex');
+                document.getElementById('tabBtnQR').className = activeClass;
+                generateQRCode();
             } else if (tab === 'schools') {
                 document.getElementById('tabContentSchools').classList.remove('hidden');
-                document.getElementById('tabBtnSchools').className = "px-4 py-2 font-bold text-xs rounded-t-xl border-b-2 border-emerald-600 text-emerald-700 bg-emerald-50";
+                document.getElementById('tabBtnSchools').className = activeClass;
                 renderAdminSchoolList();
             } else if (tab === 'settings') {
                 document.getElementById('tabContentSettings').classList.remove('hidden');
-                document.getElementById('tabBtnSettings').className = "px-4 py-2 font-bold text-xs rounded-t-xl border-b-2 border-emerald-600 text-emerald-700 bg-emerald-50";
+                document.getElementById('tabBtnSettings').className = activeClass;
             }
         }
 
@@ -929,7 +931,7 @@
             renderAdminTable(filtered);
         }
 
-        /* --- ADMIN SCHOOL MANAGEMENT CONTROLS --- */
+        /* --- SCHOOL MANAGEMENT CONTROLS --- */
         function renderAdminSchoolList() {
             const container = document.getElementById('schoolListAdminContainer');
             if (!container) return;
@@ -957,6 +959,7 @@
                 schoolsList.unshift(val);
                 input.value = '';
                 saveSchools();
+                showToast("নতুন স্কুল যোগ করা হয়েছে!");
             }
         }
 
@@ -971,6 +974,7 @@
         function removeSchoolFromAdmin(index) {
             schoolsList.splice(index, 1);
             saveSchools();
+            showToast("স্কুল তালিকা থেকে মোছা হয়েছে!");
         }
 
         function updateRoutineImageUrl() {
@@ -978,14 +982,14 @@
             if (url) {
                 localStorage.setItem('ananda_routine_url', url);
                 setRoutineImageSrc(url);
-                alert("রুটিনের ছবি সফলভাবে আপডেট করা হয়েছে!");
+                showToast("রুটিন লিংক সেভ করা হয়েছে!");
             }
         }
 
         function exportToCSV() {
             const data = getSubmissions();
             if (data.length === 0) {
-                alert("ডাউনলোড করার মতো ডাটা নেই!");
+                showToast("ডাউনলোড করার মতো কোনো ডাটা নেই!", "fa-circle-exclamation");
                 return;
             }
 
@@ -1014,7 +1018,36 @@
             document.body.removeChild(link);
         }
 
-        /* --- MODAL CONTROL FUNCTIONS --- */
+        /* --- QR CODE GENERATION --- */
+        function generateQRCode() {
+            const pageUrl = window.location.href;
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = '';
+
+            new QRCode(qrContainer, {
+                text: pageUrl,
+                width: 170,
+                height: 170,
+                colorDark : "#031209",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        }
+
+        function downloadQRCode() {
+            const qrContainer = document.getElementById('qrcode');
+            const img = qrContainer.querySelector('img');
+            if (img && img.src) {
+                const link = document.createElement('a');
+                link.href = img.src;
+                link.download = 'Physics_Chemistry_Ananda_Leaflet_QR.png';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+
+        /* --- FULLSCREEN MODAL CONTROLS --- */
         function openFullscreenImage() {
             const modal = document.getElementById('imageModal');
             const fullImg = document.getElementById('fullscreenImg');
@@ -1024,41 +1057,6 @@
 
         function closeFullscreenImage() {
             document.getElementById('imageModal').classList.add('hidden');
-        }
-
-        function openQRModal() {
-            const qrModal = document.getElementById('qrModal');
-            qrModal.classList.remove('hidden');
-            const pageUrl = window.location.href;
-
-            const qrContainer = document.getElementById('qrcode');
-            qrContainer.innerHTML = '';
-
-            new QRCode(qrContainer, {
-                text: pageUrl,
-                width: 160,
-                height: 160,
-                colorDark : "#052e16",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
-            });
-        }
-
-        function closeQRModal() {
-            document.getElementById('qrModal').classList.add('hidden');
-        }
-
-        function downloadQRCode() {
-            const qrContainer = document.getElementById('qrcode');
-            const img = qrContainer.querySelector('img');
-            if (img && img.src) {
-                const link = document.createElement('a');
-                link.href = img.src;
-                link.download = 'Ananda_Physics_Chemistry_QR.png';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
         }
 
         function escapeHtml(str) {
