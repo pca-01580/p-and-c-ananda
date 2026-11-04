@@ -16,6 +16,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
     <script>
+        // HARDCODED CENTRAL GOOGLE SHEET APPS SCRIPT WEB APP URL
+        const HARDCODED_GSHEET_API = "https://script.google.com/macros/s/AKfycbwdxTZv65I_gmLRPMfkZNrzI5_aylnSGHKEuGGGeH-HKo2QmVCC2bE9VPCa0jrKoe-n/exec";
+
         tailwind.config = {
             theme: {
                 extend: {
@@ -107,7 +110,7 @@
             <div class="flex items-center gap-2">
                 <div id="syncBadge" class="text-[11px] px-2.5 py-1 rounded-full font-bold bg-emerald-950/80 text-emerald-400 border border-emerald-800 flex items-center gap-1.5 shadow">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                    <span>ক্লাউড সেভ অন</span>
+                    <span>সেন্ট্রাল গুগল শিট অন</span>
                 </div>
                 <button onclick="handleSecretAdminClick()" class="text-slate-400 hover:text-amber-400 p-1.5 transition text-sm">
                     <i class="fa-solid fa-user-shield"></i>
@@ -299,7 +302,7 @@
                     <i class="fa-solid fa-user-shield text-amber-400 text-xl"></i>
                     <div>
                         <h3 class="font-bold text-base leading-tight">এডমিন প্যানেল (আনন্দ স্যার)</h3>
-                        <p class="text-xs text-emerald-400">রিয়েল-টাইম শিক্ষার্থী ট্র্যাকিং ও ক্লাউড সিস্টেম</p>
+                        <p class="text-xs text-emerald-400">সেন্ট্রাল গুগল শিট ও রিয়েল-টাইম ক্লাউড সিস্টেমে সংযুক্ত</p>
                     </div>
                 </div>
                 <button onclick="closeAdminModal()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center justify-center">
@@ -343,7 +346,7 @@
                         <i class="fa-solid fa-image mr-1"></i> রুটিন ছবি সেটিংস
                     </button>
                     <button onclick="switchAdminTab('gsheet')" id="tabBtnGSheet" class="px-3.5 py-2 font-bold text-xs rounded-t-xl text-slate-500 hover:text-slate-800 whitespace-nowrap">
-                        <i class="fa-solid fa-file-csv mr-1"></i> Google Sheet API
+                        <i class="fa-solid fa-file-csv mr-1"></i> Google Sheet API স্ট্যাটাস
                     </button>
                 </div>
 
@@ -376,10 +379,16 @@
                             <input type="text" id="adminSearchInput" onkeyup="filterAdminData()" placeholder="নাম, ফোন বা স্কুল খুঁজুন..." 
                                 class="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-300 rounded-lg outline-none focus:border-emerald-600">
                         </div>
-                        <button onclick="exportToCSV()" class="w-full sm:w-auto text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3.5 py-2 rounded-lg transition flex items-center justify-center gap-1.5 shadow">
-                            <i class="fa-solid fa-file-excel"></i>
-                            <span>Excel (CSV) ডাউনলোড</span>
-                        </button>
+                        <div class="flex gap-2 w-full sm:w-auto">
+                            <button onclick="loadCentralDataFromGSheet()" class="flex-1 sm:flex-none text-xs bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-3 py-2 rounded-lg transition flex items-center justify-center gap-1.5 shadow">
+                                <i class="fa-solid fa-arrows-rotate"></i>
+                                <span>গুগল শিট রিফ্রেশ</span>
+                            </button>
+                            <button onclick="exportToCSV()" class="flex-1 sm:flex-none text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3.5 py-2 rounded-lg transition flex items-center justify-center gap-1.5 shadow">
+                                <i class="fa-solid fa-file-excel"></i>
+                                <span>Excel (CSV) ডাউনলোড</span>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Table -->
@@ -478,23 +487,27 @@
                     </div>
                 </div>
 
-                <!-- TAB 5: Google Sheet API Integration -->
+                <!-- TAB 5: Google Sheet API Integration Status -->
                 <div id="tabContentGSheet" class="hidden space-y-4 overflow-y-auto">
                     <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl space-y-3">
-                        <h4 class="font-bold text-emerald-950 text-sm flex items-center gap-2">
-                            <i class="fa-solid fa-sheet-plastic text-emerald-600 text-lg"></i> Google Apps Script Web App Endpoint URL Integration
-                        </h4>
+                        <div class="flex items-center gap-2 text-emerald-900">
+                            <i class="fa-solid fa-circle-check text-emerald-600 text-xl"></i>
+                            <h4 class="font-bold text-sm">সেন্ট্রাল গুগল শিট এপিআই (Google Sheet API) কানেক্টেড</h4>
+                        </div>
                         <p class="text-xs text-slate-600 leading-relaxed">
-                            আনন্দ স্যার, আপনার নিজস্ব Google Sheet-এ প্রতি স্টুডেন্ট সাবমিশনের কপি রিয়েল-টাইমে পাঠানোর জন্য গুগল শিটের Web App URL-টি নিচে বসান।
+                            আনন্দ স্যার, আপনার গুগল অ্যাপস স্ক্রিপ্ট এপিআই লিংকটি সরাসরি ওয়েবসাইটের কোডের ভেতরে স্থায়ীভাবে বসানো আছে। শিক্ষার্থীরা যে প্রান্ত থেকেই স্ক্যান করুক না কেন, সব ডাটা লাইভ শিটে জমা হবে।
                         </p>
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-700 mb-1">Google Web App Exec URL:</label>
-                            <input type="url" id="adminGSheetUrlInput" placeholder="https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbwdxTZv65I_gmLRPMfkZNrzI5_aylnSGHKEuGGGeH-HKo2QmVCC2bE9VPCa0jrKoe-n/exec/exec" 
-                                   class="w-full text-xs px-3 py-2.5 border border-slate-300 rounded-xl outline-none bg-white font-mono focus:border-emerald-600">
+                            <label class="block text-[11px] font-bold text-slate-700 mb-1">সক্রিয় সেন্ট্রাল Web App URL:</label>
+                            <input type="text" id="adminGSheetUrlInput" readonly
+                                   class="w-full text-xs px-3 py-2.5 border border-emerald-300 rounded-xl outline-none bg-white font-mono text-emerald-800 font-bold select-all">
                         </div>
-                        <button onclick="saveGSheetApiUrl()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition shadow">
-                            সেভ ও কানেক্ট করুন
-                        </button>
+                        <div class="pt-2">
+                            <button onclick="loadCentralDataFromGSheet()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition shadow flex items-center gap-2">
+                                <i class="fa-solid fa-arrows-rotate"></i>
+                                <span>গুগল শিট থেকে ডাটা সিঙ্ক করুন</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -502,128 +515,6 @@
             
         </div>
     </div>
-
-    <!-- FIREBASE CLOUD REAL-TIME ENGINE -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, updateDoc, collection, onSnapshot, query, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // Global Firebase Configuration
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'p-and-c-ananda-portal';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' 
-            ? JSON.parse(__firebase_config) 
-            : {
-                apiKey: "AIzaSyDemoKeyFallbackModeOnly123456",
-                authDomain: "demo-ananda.firebaseapp.com",
-                projectId: "demo-ananda",
-                storageBucket: "demo-ananda.appspot.com",
-                messagingSenderId: "123456789",
-                appId: "1:123456789:web:123456789"
-            };
-
-        let app, db, auth, currentUser = null;
-        let realtimeSubmissions = [];
-
-        window.firebaseSystem = {
-            isReady: false,
-            saveSubmission: null,
-            updateSubmission: null,
-            deleteSubmission: null,
-            saveSettings: null
-        };
-
-        async function initFirebaseCloud() {
-            try {
-                app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    currentUser = (await signInWithCustomToken(auth, __initial_auth_token)).user;
-                } else {
-                    currentUser = (await signInAnonymously(auth)).user;
-                }
-
-                if (!currentUser) return;
-
-                // 1. Real-time Submissions Stream
-                const subCol = collection(db, 'artifacts', appId, 'public', 'data', 'submissions');
-                onSnapshot(query(subCol), (snapshot) => {
-                    realtimeSubmissions = [];
-                    snapshot.forEach(docSnap => {
-                        realtimeSubmissions.push({ id: docSnap.id, ...docSnap.data() });
-                    });
-                    
-                    realtimeSubmissions.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
-                    
-                    window.allStudentData = realtimeSubmissions;
-                    if (window.renderAdminTable) {
-                        window.renderAdminTable(realtimeSubmissions);
-                    }
-                }, (error) => {
-                    console.warn("Firestore snapshot info:", error);
-                });
-
-                // 2. Real-time Settings Stream
-                const configDoc = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'appConfig');
-                onSnapshot(configDoc, (docSnap) => {
-                    if (docSnap.exists()) {
-                        const data = docSnap.data();
-                        if (data.routineUrl && window.setRoutineImageSrc) {
-                            window.setRoutineImageSrc(data.routineUrl);
-                        }
-                        if (data.schoolsList && window.updateSchoolsFromCloud) {
-                            window.updateSchoolsFromCloud(data.schoolsList);
-                        }
-                        if (data.gsheetUrl) {
-                            localStorage.setItem('ananda_gsheet_url', data.gsheetUrl);
-                            const input = document.getElementById('adminGSheetUrlInput');
-                            if (input) input.value = data.gsheetUrl;
-                        }
-                    }
-                }, (error) => {
-                    console.warn("Config snapshot info:", error);
-                });
-
-                window.firebaseSystem.isReady = true;
-                
-                window.firebaseSystem.saveSubmission = async (record) => {
-                    if (!auth.currentUser) return;
-                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'submissions', record.id);
-                    await setDoc(docRef, record);
-                };
-
-                window.firebaseSystem.updateSubmission = async (docId, updateFields) => {
-                    if (!auth.currentUser || !docId) return;
-                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'submissions', docId);
-                    await updateDoc(docRef, updateFields);
-                };
-
-                window.firebaseSystem.deleteSubmission = async (docId) => {
-                    if (!auth.currentUser || !docId) return;
-                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'submissions', docId);
-                    await deleteDoc(docRef);
-                };
-
-                window.firebaseSystem.saveSettings = async (settingsObj) => {
-                    if (!auth.currentUser) return;
-                    const configRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'appConfig');
-                    await setDoc(configRef, settingsObj, { merge: true });
-                };
-
-                const syncBadge = document.getElementById('syncBadge');
-                if (syncBadge) {
-                    syncBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> ক্লাউড সিঙ্ক অন`;
-                }
-
-            } catch (err) {
-                console.warn("Fallback to local browser cache:", err);
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', initFirebaseCloud);
-    </script>
 
     <!-- MAIN FRONTEND & ADMIN LOGIC -->
     <script>
@@ -656,10 +547,12 @@
             loadSchools();
             loadRoutineUrl();
             window.allStudentData = getSubmissionsLocal();
-            const savedGSheet = localStorage.getItem('ananda_gsheet_url');
-            if (savedGSheet && document.getElementById('adminGSheetUrlInput')) {
-                document.getElementById('adminGSheetUrlInput').value = savedGSheet;
-            }
+            
+            const gsheetInput = document.getElementById('adminGSheetUrlInput');
+            if (gsheetInput) gsheetInput.value = HARDCODED_GSHEET_API;
+
+            // Attempt background fetch from Central Google Sheet
+            loadCentralDataFromGSheet();
         });
 
         function showToast(message, iconClass = "fa-circle-check") {
@@ -681,22 +574,10 @@
             renderSchoolDropdown();
         }
 
-        window.updateSchoolsFromCloud = function(cloudSchools) {
-            if (Array.isArray(cloudSchools) && cloudSchools.length > 0) {
-                schoolsList = cloudSchools;
-                localStorage.setItem('ananda_schools_list', JSON.stringify(schoolsList));
-                renderSchoolDropdown();
-                renderAdminSchoolList();
-            }
-        };
-
         function saveSchools() {
             localStorage.setItem('ananda_schools_list', JSON.stringify(schoolsList));
             renderSchoolDropdown();
             renderAdminSchoolList();
-            if (window.firebaseSystem && window.firebaseSystem.saveSettings) {
-                window.firebaseSystem.saveSettings({ schoolsList: schoolsList });
-            }
         }
 
         function renderSchoolDropdown() {
@@ -741,16 +622,10 @@
             return url;
         }
 
-        function handleImageError(imgElement) {
-            imgElement.onerror = null; 
-            imgElement.src = "https://placehold.co/1000x1200/082112/fbbf24?text=Physics+%26+Chemistry+Routine+Coming+Soon";
-        }
-
         function handleRoutineFileUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
 
-            // Compress image to Base64 for fast rendering
             const reader = new FileReader();
             reader.onload = function(e) {
                 const img = new Image();
@@ -778,10 +653,6 @@
                     const compressedBase64 = canvas.toDataURL('image/jpeg', 0.85);
                     localStorage.setItem('ananda_routine_url', compressedBase64);
                     window.setRoutineImageSrc(compressedBase64);
-                    
-                    if (window.firebaseSystem && window.firebaseSystem.saveSettings) {
-                        window.firebaseSystem.saveSettings({ routineUrl: compressedBase64 });
-                    }
                     showToast("রুটিন ছবি সফলভাবে সেভ করা হয়েছে!");
                 };
                 img.src = e.target.result;
@@ -858,7 +729,7 @@
             }
         }
 
-        /* --- FORM SUBMIT & SILENT TRACKING --- */
+        /* --- FORM SUBMIT & CENTRAL GOOGLE SHEET POST --- */
         async function handleFormSubmit(event) {
             event.preventDefault();
             const name = document.getElementById('studentName').value.trim();
@@ -900,14 +771,11 @@
                 openedDrive: "না"
             };
 
-            // Save to Local + Firebase Cloud
+            // 1. Local Fallback Save
             saveSubmissionLocal(newRecord);
-            if (window.firebaseSystem && window.firebaseSystem.saveSubmission) {
-                window.firebaseSystem.saveSubmission(newRecord);
-            }
 
-            // Post to optional Google Apps Script Web App
-            postToGoogleSheetApi(newRecord);
+            // 2. Immediate Central Google Sheet Push
+            postToCentralGoogleSheet(newRecord);
 
             // Populate Student Routine View
             document.getElementById('displayStudentName').innerText = name;
@@ -921,18 +789,46 @@
             startSilentDurationTracking();
         }
 
-        function postToGoogleSheetApi(record) {
-            const endpoint = localStorage.getItem('ananda_gsheet_url');
-            if (!endpoint) return;
+        function postToCentralGoogleSheet(record) {
             try {
-                fetch(endpoint, {
+                fetch(HARDCODED_GSHEET_API, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify(record)
+                }).then(() => {
+                    console.log("Central Google Sheet synced!");
+                }).catch(err => {
+                    console.warn("GSheet push fallback:", err);
                 });
             } catch(e) {
-                console.warn("GSheet sync attempt error:", e);
+                console.warn("GSheet sync attempt warning:", e);
+            }
+        }
+
+        async function loadCentralDataFromGSheet() {
+            try {
+                const res = await fetch(HARDCODED_GSHEET_API);
+                if (res.ok) {
+                    const rows = await res.json();
+                    if (Array.isArray(rows) && rows.length > 0) {
+                        const cloudData = rows.map((r, idx) => ({
+                            id: 'gs_' + idx,
+                            name: r.name || 'N/A',
+                            phone: r.phone || 'N/A',
+                            school: r.school || 'N/A',
+                            startTime: r.startTime || 'N/A',
+                            durationFormatted: r.duration || '00 মিনিট 00 সেকেন্ড',
+                            savedImage: r.savedImage ? 'হ্যাঁ' : 'না',
+                            openedDrive: r.openedDrive ? 'হ্যাঁ' : 'না',
+                            timestamp: r.timestamp || ''
+                        }));
+                        window.allStudentData = cloudData;
+                        renderAdminTable(cloudData);
+                    }
+                }
+            } catch(e) {
+                console.warn("Could not fetch central data directly from GSheet endpoint:", e);
             }
         }
 
@@ -952,18 +848,12 @@
                 };
 
                 updateSubmissionLocal(currentSubmissionId, updates);
-                if (window.firebaseSystem && window.firebaseSystem.updateSubmission) {
-                    window.firebaseSystem.updateSubmission(currentSubmissionId, updates);
-                }
             }, 1000);
         }
 
         function handleImageDownload() {
             const updates = { savedImage: "হ্যাঁ" };
             updateSubmissionLocal(currentSubmissionId, updates);
-            if (window.firebaseSystem && window.firebaseSystem.updateSubmission) {
-                window.firebaseSystem.updateSubmission(currentSubmissionId, updates);
-            }
 
             const btnText = document.getElementById('downloadBtnText');
             btnText.innerText = "✓ সেভ করা হয়েছে!";
@@ -981,9 +871,6 @@
         function handleDriveOpen() {
             const updates = { openedDrive: "হ্যাঁ" };
             updateSubmissionLocal(currentSubmissionId, updates);
-            if (window.firebaseSystem && window.firebaseSystem.updateSubmission) {
-                window.firebaseSystem.updateSubmission(currentSubmissionId, updates);
-            }
         }
 
         function resetFormView() {
@@ -1028,11 +915,6 @@
             list = list.filter(item => item.id !== id);
             localStorage.setItem('ananda_student_submissions', JSON.stringify(list));
             window.allStudentData = list;
-
-            if (window.firebaseSystem && window.firebaseSystem.deleteSubmission) {
-                window.firebaseSystem.deleteSubmission(id);
-            }
-
             renderAdminTable(window.allStudentData);
             showToast("এন্ট্রি সফলভাবে মুছে ফেলা হয়েছে!");
         }
@@ -1063,7 +945,7 @@
                 document.getElementById('adminDataScreen').classList.add('flex');
                 document.getElementById('pinError').classList.add('hidden');
                 
-                renderAdminTable(window.allStudentData);
+                loadCentralDataFromGSheet();
                 renderAdminSchoolList();
                 renderHDQRCode();
             } else {
@@ -1090,7 +972,7 @@
             if (tab === 'data') {
                 document.getElementById('tabContentData').classList.remove('hidden');
                 document.getElementById('tabBtnData').className = activeClass;
-                renderAdminTable(window.allStudentData);
+                loadCentralDataFromGSheet();
             } else if (tab === 'qr') {
                 document.getElementById('tabContentQR').classList.remove('hidden');
                 document.getElementById('tabContentQR').classList.add('flex');
@@ -1235,21 +1117,7 @@
             if (url) {
                 localStorage.setItem('ananda_routine_url', url);
                 window.setRoutineImageSrc(url);
-                if (window.firebaseSystem && window.firebaseSystem.saveSettings) {
-                    window.firebaseSystem.saveSettings({ routineUrl: url });
-                }
                 showToast("রুটিন লিংক সেভ করা হয়েছে!");
-            }
-        }
-
-        function saveGSheetApiUrl() {
-            const url = document.getElementById('adminGSheetUrlInput').value.trim();
-            if (url) {
-                localStorage.setItem('ananda_gsheet_url', url);
-                if (window.firebaseSystem && window.firebaseSystem.saveSettings) {
-                    window.firebaseSystem.saveSettings({ gsheetUrl: url });
-                }
-                showToast("Google Sheet Web App URL সেভ হয়েছে!");
             }
         }
 
