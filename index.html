@@ -34,6 +34,12 @@
                     }
                 }
             }
+        };
+
+        // Early declaration of handleImageError so it is available when <img> onerror fires during HTML parsing
+        function handleImageError(imgElement) {
+            imgElement.onerror = null; 
+            imgElement.src = "https://placehold.co/1000x1200/082112/fbbf24?text=Physics+%26+Chemistry+Routine+Coming+Soon";
         }
     </script>
     <style>
@@ -43,7 +49,7 @@
             min-height: 100vh;
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.97);
+            background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(16px);
         }
         .pulse-btn {
@@ -55,7 +61,7 @@
         }
         @keyframes float-bounce {
             0%, 100% { transform: translateY(0) scale(1); box-shadow: 0 10px 25px rgba(245, 158, 11, 0.6); }
-            50% { transform: translateY(-7px) scale(1.02); box-shadow: 0 18px 35px rgba(245, 158, 11, 0.85); }
+            50% { transform: translateY(-6px) scale(1.02); box-shadow: 0 18px 35px rgba(245, 158, 11, 0.85); }
         }
         .animate-float-call {
             animation: float-bounce 2.2s infinite ease-in-out;
@@ -64,13 +70,13 @@
 </head>
 <body class="text-slate-800 antialiased flex flex-col justify-between min-h-screen relative">
 
-    <!-- Header (Title & Logo with Secret 3-Click Admin Entry) -->
+    <!-- Header (Brand Title + Logo + Secret 3-Click Admin Entry) -->
     <header class="w-full bg-slate-950/90 backdrop-blur-md border-b border-emerald-900/60 sticky top-0 z-40">
         <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
             
-            <!-- Left Side: Brand Logo + Text Title -->
+            <!-- Left: Brand Logo + Text Title -->
             <div class="flex items-center space-x-3 cursor-pointer select-none" onclick="handleSecretAdminClick()" title="ফিজিক্স & কেমিস্ট্রি with আনন্দ">
-                <!-- Custom Flask/Atom Logo -->
+                <!-- Custom Chemistry/Physics Vector Icon -->
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-950 via-slate-900 to-black p-1 border-2 border-emerald-500/40 shadow-lg flex items-center justify-center relative overflow-hidden shrink-0">
                     <svg viewBox="0 0 100 100" class="w-full h-full">
                         <ellipse cx="35" cy="30" rx="18" ry="7" fill="none" stroke="#fbbf24" stroke-width="2.5" transform="rotate(-30 35 30)"/>
@@ -97,29 +103,29 @@
                 </div>
             </div>
             
-            <!-- Live Sync Indicator & Secret Trigger -->
+            <!-- Right: Live Cloud Sync Badge & Hidden Admin Key -->
             <div class="flex items-center gap-2">
                 <div id="syncBadge" class="text-[11px] px-2.5 py-1 rounded-full font-bold bg-emerald-950/80 text-emerald-400 border border-emerald-800 flex items-center gap-1.5 shadow">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                    <span>ক্লাউড সিঙ্ক চালু</span>
+                    <span>ক্লাউড সেভ অন</span>
                 </div>
-                <div class="text-slate-950 select-none cursor-pointer p-1.5 opacity-10 hover:opacity-100 transition text-xs" onclick="handleSecretAdminClick()">
-                    <i class="fa-solid fa-user-shield text-slate-400"></i>
-                </div>
+                <button onclick="handleSecretAdminClick()" class="text-slate-400 hover:text-amber-400 p-1.5 transition text-sm">
+                    <i class="fa-solid fa-user-shield"></i>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- Custom Notification Toast -->
+    <!-- Notification Toast -->
     <div id="toast" class="fixed top-16 left-1/2 transform -translate-x-1/2 z-50 hidden bg-slate-900 text-white text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-2xl border border-emerald-500/40 flex items-center gap-2 transition-all">
-        <i id="toastIcon" class="fa-solid fa-circle-info text-emerald-400"></i>
-        <span id="toastMsg">মেসেজ নোটিফিকেশন</span>
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toastMsg">বিজ্ঞপ্তি বার্তা</span>
     </div>
 
-    <!-- Main Content Container -->
+    <!-- Main Container -->
     <main class="max-w-xl w-full mx-auto px-4 py-6 flex-grow flex flex-col justify-center">
 
-        <!-- Welcome Banner Card -->
+        <!-- Banner Header -->
         <div id="heroHeader" class="mb-5 text-center">
             <div class="inline-flex items-center gap-1.5 px-4 py-1 bg-emerald-500/10 border border-emerald-400/30 text-emerald-300 rounded-full text-xs font-bold mb-3 tracking-wide">
                 <i class="fa-solid fa-flask text-amber-400"></i>
@@ -139,7 +145,7 @@
 
             <form id="studentForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
                 
-                <!-- Student Name -->
+                <!-- Student Name Input -->
                 <div>
                     <label class="block text-sm font-bold text-slate-800 mb-1.5">
                         <i class="fa-solid fa-user text-emerald-600 mr-1.5"></i> তোমার নাম <span class="text-rose-500">*</span>
@@ -148,11 +154,11 @@
                         placeholder="যেমন: মোঃ সাকিব হাসান" 
                         class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition text-slate-800 placeholder-slate-400 font-medium text-base">
                     <p id="nameError" class="hidden text-xs text-rose-500 font-medium mt-1 flex items-center gap-1">
-                        <i class="fa-solid fa-circle-exclamation"></i> অনুগ্রহ করে তোমার নাম টাইপ করো।
+                        <i class="fa-solid fa-circle-exclamation"></i> অনুগ্রহ করে তোমার সঠিক নাম টাইপ করো।
                     </p>
                 </div>
 
-                <!-- Phone Number (11-Digit BD Regex Validation) -->
+                <!-- Phone Input (11-Digit BD Regex) -->
                 <div>
                     <div class="flex justify-between items-center mb-1.5">
                         <label class="block text-sm font-bold text-slate-800">
@@ -187,7 +193,7 @@
                     <!-- Custom School Field -->
                     <div id="customSchoolWrapper" class="hidden mt-2">
                         <input type="text" id="customSchoolInput" 
-                            placeholder="তোমার স্কুলের নাম লিখুন..." 
+                            placeholder="তোমার স্কুলের নাম লেখো..." 
                             class="w-full px-4 py-2.5 rounded-xl border border-amber-300 focus:ring-2 focus:ring-amber-500 outline-none text-slate-800 text-sm font-medium bg-amber-50/50">
                     </div>
                 </div>
@@ -202,13 +208,13 @@
             </form>
         </div>
 
-        <!-- Routine Display Section (Clean Student View) -->
+        <!-- Routine Display Section (Clean View) -->
         <div id="routineContainer" class="hidden glass-card rounded-3xl p-5 sm:p-6 shadow-2xl border border-white/20 text-center relative animate-fade-in mb-16">
             
             <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4 text-left">
                 <div>
                     <span class="text-xs font-bold text-emerald-700 bg-emerald-100 border border-emerald-300 px-2.5 py-1 rounded-full">
-                        <i class="fa-solid fa-circle-check mr-1"></i> রুটিন সফলভাবে উন্মুক্ত হয়েছে!
+                        <i class="fa-solid fa-circle-check mr-1"></i> রুটিন উন্মুক্ত হয়েছে!
                     </span>
                     <h3 class="text-xl font-bold text-slate-900 mt-1.5">
                         স্বাগতম, <span id="displayStudentName" class="text-emerald-700"></span>!
@@ -222,7 +228,7 @@
                 </button>
             </div>
 
-            <!-- Routine Image Display -->
+            <!-- Image View Area -->
             <div class="relative bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-inner group flex items-center justify-center min-h-[300px]">
                 <img id="routineImage" 
                      src="./routine.jpg" 
@@ -237,7 +243,7 @@
                 </div>
             </div>
 
-            <!-- Actions -->
+            <!-- Download and Drive Links -->
             <div class="mt-4 flex flex-col sm:flex-row gap-2.5">
                 <button onclick="handleImageDownload()" class="flex-1 py-3 px-4 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-2 shadow border border-slate-700">
                     <i class="fa-solid fa-download text-amber-400"></i>
@@ -269,10 +275,10 @@
     <!-- Footer -->
     <footer class="w-full py-4 bg-slate-950 text-center text-slate-500 text-xs border-t border-slate-900">
         <p>© 2026 Physics &amp; Chemistry with Ananda. All rights reserved.</p>
-        <p class="text-[11px] text-slate-600 mt-0.5">যোগাযোগ ও ভর্তি সংক্রান্ত তথ্য: 01521565771 📞</p>
+        <p class="text-[11px] text-slate-600 mt-0.5">ভর্তি সংক্রান্ত যোগাযোগ: 01521565771 📞</p>
     </footer>
 
-    <!-- Fullscreen Image Modal -->
+    <!-- Fullscreen Image Zoom Modal -->
     <div id="imageModal" class="fixed inset-0 bg-slate-950/95 z-50 hidden flex flex-col items-center justify-center p-2 sm:p-4">
         <button onclick="closeFullscreenImage()" class="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-slate-800 text-white hover:bg-slate-700 flex items-center justify-center text-lg">
             <i class="fa-solid fa-xmark"></i>
@@ -280,14 +286,14 @@
         <div class="max-w-4xl max-h-[85vh] overflow-auto p-2 flex items-center justify-center">
             <img id="fullscreenImg" src="" alt="Routine Full View" class="w-full h-auto max-h-[80vh] object-contain rounded-xl shadow-2xl">
         </div>
-        <p class="text-slate-300 text-xs mt-3">জুম করতে ডাবল ট্যাপ বা পিন্চ করুন</p>
+        <p class="text-slate-300 text-xs mt-3">জুম করতে পিন্চ করুন বা ডাবল চাপুন</p>
     </div>
 
     <!-- SECRET ADMIN PANEL MODAL (PIN: 1234) -->
     <div id="adminModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-4">
         <div class="bg-white rounded-3xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden border border-slate-200">
             
-            <!-- Admin Modal Header -->
+            <!-- Modal Top Bar -->
             <div class="bg-slate-950 text-white px-5 py-3.5 flex justify-between items-center border-b border-slate-800">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-user-shield text-amber-400 text-xl"></i>
@@ -301,7 +307,7 @@
                 </button>
             </div>
 
-            <!-- Admin PIN Screen -->
+            <!-- PIN Auth Screen -->
             <div id="adminPinScreen" class="p-8 text-center my-auto">
                 <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
                     <i class="fa-solid fa-lock"></i>
@@ -319,16 +325,16 @@
                 </div>
             </div>
 
-            <!-- Admin Dashboard Tabs & Content -->
+            <!-- Dashboard Content Screen -->
             <div id="adminDataScreen" class="hidden flex-col flex-1 overflow-hidden p-4 sm:p-6 space-y-4">
                 
-                <!-- Admin Navigation Tabs -->
+                <!-- Admin Tabs -->
                 <div class="flex border-b border-slate-200 gap-2 overflow-x-auto pb-1">
                     <button onclick="switchAdminTab('data')" id="tabBtnData" class="px-3.5 py-2 font-bold text-xs rounded-t-xl border-b-2 border-emerald-600 text-emerald-700 bg-emerald-50 whitespace-nowrap">
                         <i class="fa-solid fa-table mr-1"></i> রিয়েল-টাইম শিক্ষার্থী ডাটা
                     </button>
                     <button onclick="switchAdminTab('qr')" id="tabBtnQR" class="px-3.5 py-2 font-bold text-xs rounded-t-xl text-slate-500 hover:text-slate-800 whitespace-nowrap">
-                        <i class="fa-solid fa-qrcode mr-1"></i> লিফলেট QR কোড জনরেটর
+                        <i class="fa-solid fa-qrcode mr-1"></i> লিফলেট QR কোড জেনারেটর
                     </button>
                     <button onclick="switchAdminTab('schools')" id="tabBtnSchools" class="px-3.5 py-2 font-bold text-xs rounded-t-xl text-slate-500 hover:text-slate-800 whitespace-nowrap">
                         <i class="fa-solid fa-school mr-1"></i> স্কুল ম্যানেজমেন্ট
@@ -336,11 +342,14 @@
                     <button onclick="switchAdminTab('settings')" id="tabBtnSettings" class="px-3.5 py-2 font-bold text-xs rounded-t-xl text-slate-500 hover:text-slate-800 whitespace-nowrap">
                         <i class="fa-solid fa-image mr-1"></i> রুটিন ছবি সেটিংস
                     </button>
+                    <button onclick="switchAdminTab('gsheet')" id="tabBtnGSheet" class="px-3.5 py-2 font-bold text-xs rounded-t-xl text-slate-500 hover:text-slate-800 whitespace-nowrap">
+                        <i class="fa-solid fa-file-csv mr-1"></i> Google Sheet API
+                    </button>
                 </div>
 
-                <!-- TAB 1: Submissions Data & Analytics -->
+                <!-- TAB 1: Real-time Data Table -->
                 <div id="tabContentData" class="space-y-3 flex-1 flex flex-col overflow-hidden">
-                    <!-- Analytics Grid -->
+                    <!-- Stats Grid -->
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
                         <div class="p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl">
                             <div class="text-[11px] text-slate-500 font-medium">মোট সাবমিশন</div>
@@ -360,7 +369,7 @@
                         </div>
                     </div>
 
-                    <!-- Search & CSV Export Controls -->
+                    <!-- Search & Controls -->
                     <div class="flex flex-col sm:flex-row justify-between items-center gap-2">
                         <div class="relative w-full sm:w-64">
                             <i class="fa-solid fa-search absolute left-3 top-2.5 text-slate-400 text-xs"></i>
@@ -373,7 +382,7 @@
                         </button>
                     </div>
 
-                    <!-- Data Table -->
+                    <!-- Table -->
                     <div class="flex-1 overflow-auto border border-slate-200 rounded-xl bg-white">
                         <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
                             <thead class="bg-slate-100 text-slate-700 uppercase font-bold sticky top-0 border-b border-slate-200">
@@ -383,9 +392,9 @@
                                     <th class="p-2.5">মোবাইল নম্বর</th>
                                     <th class="p-2.5">স্কুলের নাম</th>
                                     <th class="p-2.5">দেখা শুরু</th>
-                                    <th class="p-2.5">কতক্ষণ দেখেছে</th>
+                                    <th class="p-2.5">স্থায়িত্ব</th>
                                     <th class="p-2.5 text-center">ছবি সেভ?</th>
-                                    <th class="p-2.5 text-center">ড্রাইভ খুলেছে?</th>
+                                    <th class="p-2.5 text-center">ড্রাইভ লিংক?</th>
                                     <th class="p-2.5 text-center">অ্যাকশন</th>
                                 </tr>
                             </thead>
@@ -396,7 +405,7 @@
                     </div>
                 </div>
 
-                <!-- TAB 2: Leaflet QR Code Generator & High-Res PNG Downloader -->
+                <!-- TAB 2: HD QR Code Generator -->
                 <div id="tabContentQR" class="hidden flex-col items-center justify-center p-4 text-center space-y-4 my-auto overflow-y-auto">
                     <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center text-xl">
                         <i class="fa-solid fa-qrcode"></i>
@@ -409,7 +418,6 @@
                         </p>
                     </div>
                     
-                    <!-- Hidden Render Engine & Visible Canvas -->
                     <div id="rawQrHolder" class="hidden"></div>
                     <div class="p-3 bg-white border-2 border-emerald-200 rounded-2xl shadow-lg inline-block">
                         <canvas id="hdQrCanvas" width="300" height="340" class="max-w-full h-auto rounded-lg"></canvas>
@@ -421,7 +429,7 @@
                     </button>
                 </div>
 
-                <!-- TAB 3: Dynamic School List Management -->
+                <!-- TAB 3: School List Management -->
                 <div id="tabContentSchools" class="hidden space-y-4 overflow-y-auto">
                     <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
                         <h4 class="font-bold text-slate-800 text-sm mb-1"><i class="fa-solid fa-plus-circle text-emerald-600 mr-1"></i> নতুন স্কুল যোগ করুন</h4>
@@ -432,24 +440,23 @@
                     </div>
 
                     <div>
-                        <h4 class="font-bold text-slate-800 text-sm mb-2"><i class="fa-solid fa-list-check text-slate-600 mr-1"></i> ড্রপডাউনের বর্তমান স্কুলের তালিকা (এডিট/ডিলিট করুন)</h4>
+                        <h4 class="font-bold text-slate-800 text-sm mb-2"><i class="fa-solid fa-list-check text-slate-600 mr-1"></i> স্কুলের বর্তমান তালিকা (এডিট/ডিলিট করুন)</h4>
                         <div id="schoolListAdminContainer" class="space-y-2 max-h-80 overflow-y-auto pr-1">
-                            <!-- School Item Rows -->
+                            <!-- Dynamic School Rows -->
                         </div>
                     </div>
                 </div>
 
-                <!-- TAB 4: Routine Image Upload & URL Settings -->
-                <div id="tabContentSettings" class="hidden space-y-4">
-                    
-                    <!-- Direct File Upload -->
+                <!-- TAB 4: Routine Settings -->
+                <div id="tabContentSettings" class="hidden space-y-4 overflow-y-auto">
+                    <!-- File Upload -->
                     <div class="p-5 bg-emerald-50 border-2 border-dashed border-emerald-300 rounded-2xl space-y-3 text-center">
                         <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto text-xl">
                             <i class="fa-solid fa-cloud-arrow-up"></i>
                         </div>
                         <div>
                             <h4 class="font-bold text-slate-900 text-sm">গ্যালারি / কম্পিউটার থেকে নতুন রুটিন ছবি সিলেক্ট করুন</h4>
-                            <p class="text-xs text-slate-500 mt-0.5">আপনার ডিভাইস থেকে যেকোনো ছবি আপলোড করুন, তা ক্লাউডে সেভ হয়ে যাবে।</p>
+                            <p class="text-xs text-slate-500 mt-0.5">আপনার ডিভাইস থেকে যেকোনো ছবি আপলোড করুন, তা শতভাগ সেভ হয়ে যাবে।</p>
                         </div>
                         <input type="file" id="routineFileInput" accept="image/*" onchange="handleRoutineFileUpload(event)" class="hidden">
                         <button onclick="document.getElementById('routineFileInput').click()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition shadow inline-flex items-center gap-2">
@@ -458,10 +465,10 @@
                         </button>
                     </div>
 
-                    <!-- Online Image URL Input -->
+                    <!-- Online Link -->
                     <div class="p-4 bg-amber-50 border border-amber-200 rounded-2xl space-y-3">
                         <label class="block text-xs font-bold text-amber-900">
-                            <i class="fa-solid fa-link text-amber-600 mr-1"></i> অথবা ড্রাইভ / অনলাইন ইমেজের ইউআরএল (URL) লিংক বসান:
+                            <i class="fa-solid fa-link text-amber-600 mr-1"></i> অথবা ড্রাইভ / ইমেজের ইউআরএল (URL) বসান:
                         </label>
                         <input type="text" id="adminRoutineUrlInput" placeholder="https://i.ibb.co/xxxx/routine.jpg" 
                                class="w-full text-xs px-3 py-2 border border-amber-300 rounded-xl outline-none bg-white font-mono">
@@ -469,7 +476,26 @@
                             লিংক সেভ ও আপডেট করুন
                         </button>
                     </div>
+                </div>
 
+                <!-- TAB 5: Google Sheet API Integration -->
+                <div id="tabContentGSheet" class="hidden space-y-4 overflow-y-auto">
+                    <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl space-y-3">
+                        <h4 class="font-bold text-emerald-950 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-sheet-plastic text-emerald-600 text-lg"></i> Google Apps Script Web App Endpoint URL Integration
+                        </h4>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            আনন্দ স্যার, আপনার নিজস্ব Google Sheet-এ প্রতি স্টুডেন্ট সাবমিশনের কপি রিয়েল-টাইমে পাঠানোর জন্য গুগল শিটের Web App URL-টি নিচে বসান।
+                        </p>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-700 mb-1">Google Web App Exec URL:</label>
+                            <input type="url" id="adminGSheetUrlInput" placeholder="https://script.google.com/macros/s/AKfycbx.../exec" 
+                                   class="w-full text-xs px-3 py-2.5 border border-slate-300 rounded-xl outline-none bg-white font-mono focus:border-emerald-600">
+                        </div>
+                        <button onclick="saveGSheetApiUrl()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition shadow">
+                            সেভ ও কানেক্ট করুন
+                        </button>
+                    </div>
                 </div>
 
             </div>
@@ -477,14 +503,14 @@
         </div>
     </div>
 
-    <!-- FIREBASE MODULES & REAL-TIME LOGIC -->
+    <!-- FIREBASE CLOUD REAL-TIME ENGINE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, updateDoc, collection, onSnapshot, query, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Global Firebase Instances
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'p-and-c-ananda-app';
+        // Global Firebase Configuration
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'p-and-c-ananda-portal';
         const firebaseConfig = typeof __firebase_config !== 'undefined' 
             ? JSON.parse(__firebase_config) 
             : {
@@ -521,7 +547,7 @@
 
                 if (!currentUser) return;
 
-                // 1. Real-time Submissions Listener
+                // 1. Real-time Submissions Stream
                 const subCol = collection(db, 'artifacts', appId, 'public', 'data', 'submissions');
                 onSnapshot(query(subCol), (snapshot) => {
                     realtimeSubmissions = [];
@@ -529,19 +555,17 @@
                         realtimeSubmissions.push({ id: docSnap.id, ...docSnap.data() });
                     });
                     
-                    // Sort by newest timestamp
                     realtimeSubmissions.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
                     
-                    // Update global UI
                     window.allStudentData = realtimeSubmissions;
                     if (window.renderAdminTable) {
                         window.renderAdminTable(realtimeSubmissions);
                     }
                 }, (error) => {
-                    console.warn("Firestore submissions snapshot error:", error);
+                    console.warn("Firestore snapshot info:", error);
                 });
 
-                // 2. Real-time App Settings Listener (Routine Image & Custom Schools)
+                // 2. Real-time Settings Stream
                 const configDoc = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'appConfig');
                 onSnapshot(configDoc, (docSnap) => {
                     if (docSnap.exists()) {
@@ -552,12 +576,16 @@
                         if (data.schoolsList && window.updateSchoolsFromCloud) {
                             window.updateSchoolsFromCloud(data.schoolsList);
                         }
+                        if (data.gsheetUrl) {
+                            localStorage.setItem('ananda_gsheet_url', data.gsheetUrl);
+                            const input = document.getElementById('adminGSheetUrlInput');
+                            if (input) input.value = data.gsheetUrl;
+                        }
                     }
                 }, (error) => {
-                    console.warn("Firestore config snapshot error:", error);
+                    console.warn("Config snapshot info:", error);
                 });
 
-                // Attach Database Functions
                 window.firebaseSystem.isReady = true;
                 
                 window.firebaseSystem.saveSubmission = async (record) => {
@@ -586,23 +614,18 @@
 
                 const syncBadge = document.getElementById('syncBadge');
                 if (syncBadge) {
-                    syncBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Realtime Sync Active`;
+                    syncBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> ক্লাউড সিঙ্ক অন`;
                 }
 
             } catch (err) {
-                console.warn("Falling back to local data system:", err);
-                const syncBadge = document.getElementById('syncBadge');
-                if (syncBadge) {
-                    syncBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400"></span> Local Cache Mode`;
-                    syncBadge.className = "text-[11px] px-2.5 py-1 rounded-full font-bold bg-amber-950/80 text-amber-300 border border-amber-800 flex items-center gap-1.5 shadow";
-                }
+                console.warn("Fallback to local browser cache:", err);
             }
         }
 
         window.addEventListener('DOMContentLoaded', initFirebaseCloud);
     </script>
 
-    <!-- MAIN APP SCRIPT -->
+    <!-- MAIN FRONTEND & ADMIN LOGIC -->
     <script>
         const BD_PHONE_REGEX = /^01[3-9]\d{8}$/;
 
@@ -615,7 +638,7 @@
             "প্রিমিয়ার আইডিয়াল হাই স্কুল",
             "আফরোজ খান মডেল স্কুল",
             "ক্যান্টনমেন্ট পাবলিক স্কুল অ্যান্ড কলেজ",
-            "মুকুল নিকেতন স্কুল",
+            "মুকুল নিকেতন হাই স্কুল",
             "নাসিরাবাদ কলেজিয়েট স্কুল",
             "অন্যান্য"
         ];
@@ -633,6 +656,10 @@
             loadSchools();
             loadRoutineUrl();
             window.allStudentData = getSubmissionsLocal();
+            const savedGSheet = localStorage.getItem('ananda_gsheet_url');
+            if (savedGSheet && document.getElementById('adminGSheetUrlInput')) {
+                document.getElementById('adminGSheetUrlInput').value = savedGSheet;
+            }
         });
 
         function showToast(message, iconClass = "fa-circle-check") {
@@ -702,7 +729,7 @@
             }
         }
 
-        /* --- ROUTINE URL & FALLBACK --- */
+        /* --- ROUTINE URL & FILE UPLOAD --- */
         function processImageLink(url) {
             if (!url) return './routine.jpg';
             if (url.includes('drive.google.com')) {
@@ -723,16 +750,41 @@
             const file = event.target.files[0];
             if (!file) return;
 
+            // Compress image to Base64 for fast rendering
             const reader = new FileReader();
             reader.onload = function(e) {
-                const dataUrl = e.target.result;
-                localStorage.setItem('ananda_routine_url', dataUrl);
-                window.setRoutineImageSrc(dataUrl);
-                
-                if (window.firebaseSystem && window.firebaseSystem.saveSettings) {
-                    window.firebaseSystem.saveSettings({ routineUrl: dataUrl });
-                }
-                showToast("রুটিন ছবি সফলভাবে আপডেট করা হয়েছে!");
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    const maxDim = 1200;
+
+                    if (width > maxDim || height > maxDim) {
+                        if (width > height) {
+                            height = Math.round((height * maxDim) / width);
+                            width = maxDim;
+                        } else {
+                            width = Math.round((width * maxDim) / height);
+                            height = maxDim;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const compressedBase64 = canvas.toDataURL('image/jpeg', 0.85);
+                    localStorage.setItem('ananda_routine_url', compressedBase64);
+                    window.setRoutineImageSrc(compressedBase64);
+                    
+                    if (window.firebaseSystem && window.firebaseSystem.saveSettings) {
+                        window.firebaseSystem.saveSettings({ routineUrl: compressedBase64 });
+                    }
+                    showToast("রুটিন ছবি সফলভাবে সেভ করা হয়েছে!");
+                };
+                img.src = e.target.result;
             };
             reader.readAsDataURL(file);
         }
@@ -806,7 +858,7 @@
             }
         }
 
-        /* --- FORM SUBMISSION & SILENT TRACKING --- */
+        /* --- FORM SUBMIT & SILENT TRACKING --- */
         async function handleFormSubmit(event) {
             event.preventDefault();
             const name = document.getElementById('studentName').value.trim();
@@ -848,11 +900,14 @@
                 openedDrive: "না"
             };
 
-            // Save locally & to Firebase Cloud
+            // Save to Local + Firebase Cloud
             saveSubmissionLocal(newRecord);
             if (window.firebaseSystem && window.firebaseSystem.saveSubmission) {
                 window.firebaseSystem.saveSubmission(newRecord);
             }
+
+            // Post to optional Google Apps Script Web App
+            postToGoogleSheetApi(newRecord);
 
             // Populate Student Routine View
             document.getElementById('displayStudentName').innerText = name;
@@ -863,8 +918,22 @@
             document.getElementById('routineContainer').classList.remove('hidden');
             document.getElementById('floatingCallWrapper').classList.remove('hidden');
 
-            // Start Silent Duration Tracking
             startSilentDurationTracking();
+        }
+
+        function postToGoogleSheetApi(record) {
+            const endpoint = localStorage.getItem('ananda_gsheet_url');
+            if (!endpoint) return;
+            try {
+                fetch(endpoint, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(record)
+                });
+            } catch(e) {
+                console.warn("GSheet sync attempt error:", e);
+            }
         }
 
         function startSilentDurationTracking() {
@@ -930,7 +999,7 @@
             document.getElementById('floatingCallWrapper').classList.add('hidden');
         }
 
-        /* --- LOCAL STORAGE BACKUP --- */
+        /* --- LOCAL STORAGE HELPERS --- */
         function getSubmissionsLocal() {
             const saved = localStorage.getItem('ananda_student_submissions');
             return saved ? JSON.parse(saved) : [];
@@ -1007,6 +1076,7 @@
             document.getElementById('tabContentQR').classList.add('hidden');
             document.getElementById('tabContentSchools').classList.add('hidden');
             document.getElementById('tabContentSettings').classList.add('hidden');
+            document.getElementById('tabContentGSheet').classList.add('hidden');
 
             const inactiveClass = "px-3.5 py-2 font-bold text-xs rounded-t-xl text-slate-500 hover:text-slate-800 whitespace-nowrap";
             const activeClass = "px-3.5 py-2 font-bold text-xs rounded-t-xl border-b-2 border-emerald-600 text-emerald-700 bg-emerald-50 whitespace-nowrap";
@@ -1015,6 +1085,7 @@
             document.getElementById('tabBtnQR').className = inactiveClass;
             document.getElementById('tabBtnSchools').className = inactiveClass;
             document.getElementById('tabBtnSettings').className = inactiveClass;
+            document.getElementById('tabBtnGSheet').className = inactiveClass;
 
             if (tab === 'data') {
                 document.getElementById('tabContentData').classList.remove('hidden');
@@ -1032,6 +1103,9 @@
             } else if (tab === 'settings') {
                 document.getElementById('tabContentSettings').classList.remove('hidden');
                 document.getElementById('tabBtnSettings').className = activeClass;
+            } else if (tab === 'gsheet') {
+                document.getElementById('tabContentGSheet').classList.remove('hidden');
+                document.getElementById('tabBtnGSheet').className = activeClass;
             }
         }
 
@@ -1058,7 +1132,7 @@
             if (statDriveClickEl) statDriveClickEl.innerText = `${driveClickCount} জন`;
 
             if (data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-slate-400 font-medium">এখনো কোনো শিক্ষার্থীর ডাটা পাওয়া যায়নি।</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-slate-400 font-medium">এখনো কোনো শিক্ষার্থীর ডাটা জমা হয়নি।</td></tr>`;
                 return;
             }
 
@@ -1153,7 +1227,7 @@
         function removeSchoolFromAdmin(index) {
             schoolsList.splice(index, 1);
             saveSchools();
-            showToast("স্কুল তালিকা থেকে মোছা হয়েছে!");
+            showToast("স্কুল মুছে ফেলা হয়েছে!");
         }
 
         function updateRoutineImageUrl() {
@@ -1165,6 +1239,17 @@
                     window.firebaseSystem.saveSettings({ routineUrl: url });
                 }
                 showToast("রুটিন লিংক সেভ করা হয়েছে!");
+            }
+        }
+
+        function saveGSheetApiUrl() {
+            const url = document.getElementById('adminGSheetUrlInput').value.trim();
+            if (url) {
+                localStorage.setItem('ananda_gsheet_url', url);
+                if (window.firebaseSystem && window.firebaseSystem.saveSettings) {
+                    window.firebaseSystem.saveSettings({ gsheetUrl: url });
+                }
+                showToast("Google Sheet Web App URL সেভ হয়েছে!");
             }
         }
 
@@ -1200,12 +1285,11 @@
             document.body.removeChild(link);
         }
 
-        /* --- HIGH-RES QR CODE GENERATION & DOWNLOAD FIX --- */
+        /* --- HD QR CODE GENERATION & DOWNLOAD --- */
         function renderHDQRCode() {
             const targetUrl = window.location.href;
             document.getElementById('qrTargetUrl').innerText = targetUrl;
 
-            // 1. Render raw QR in hidden holder
             const rawHolder = document.getElementById('rawQrHolder');
             rawHolder.innerHTML = '';
             
@@ -1218,36 +1302,30 @@
                 correctLevel : QRCode.CorrectLevel.H
             });
 
-            // 2. Draw HD Canvas with Header Banner for Leaflet printing
             setTimeout(() => {
                 const rawImg = rawHolder.querySelector('img') || rawHolder.querySelector('canvas');
                 const canvas = document.getElementById('hdQrCanvas');
                 const ctx = canvas.getContext('2d');
 
-                // Clear & fill background
                 ctx.fillStyle = '#ffffff';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                // Top Header Banner
                 ctx.fillStyle = '#031209';
                 ctx.fillRect(0, 0, canvas.width, 50);
 
-                // Title Text
                 ctx.fillStyle = '#fbbf24';
                 ctx.font = 'bold 16px Hind Siliguri, sans-serif';
                 ctx.textAlign = 'center';
                 ctx.fillText('ফিজিক্স & কেমিস্ট্রি with আনন্দ', canvas.width / 2, 32);
 
-                // Draw QR Code in center
                 if (rawImg) {
                     ctx.drawImage(rawImg, 40, 65, 220, 220);
                 }
 
-                // Subtitle Footer Text
                 ctx.fillStyle = '#059669';
                 ctx.font = 'bold 12px Hind Siliguri, sans-serif';
                 ctx.fillText('স্ক্যান করে রুটিন দেখুন 📱', canvas.width / 2, 312);
-            }, 300);
+            }, 350);
         }
 
         function downloadHDQRCode() {
@@ -1260,13 +1338,13 @@
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                showToast("HD QR কোড সফলভাবে ডাউনলোড হয়েছে!");
+                showToast("HD QR কোড সফলভাবে সেভ হয়েছে!");
             } catch(e) {
                 showToast("ডাউনলোড ব্যর্থ হয়েছে, আবার চেষ্টা করুন", "fa-circle-exclamation");
             }
         }
 
-        /* --- FULLSCREEN MODAL CONTROLS --- */
+        /* --- FULLSCREEN MODAL --- */
         function openFullscreenImage() {
             const modal = document.getElementById('imageModal');
             const fullImg = document.getElementById('fullscreenImg');
